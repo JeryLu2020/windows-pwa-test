@@ -81,7 +81,7 @@ self.addEventListener('notificationclick', function (event) {
     }).then(function (clientList) {
         for (var i = 0; i < clientList.length; i++) {
             var client = clientList[i];
-            if (client.url == 'http://localhost:1337/' && 'focus' in client)
+            if (client.url == 'https://windows-pwa-test-update.azurewebsites.net/' && 'focus' in client)
                 return client.focus();
         }
         if (clients.openWindow)
