@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var webpush = require('web-push');
+var request = require('request');
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -49,5 +50,28 @@ router.post('/sendNotification', function (req, res) {
         });
 });
 
+//post to function app
+var functionurl = "https://func-js-2019.azurewebsites.net/api/HttpTrigger2?code=mlLdYVKgmhuzrpaq3qSdvk5VAhDRKkM38tQra5agKeHasmonozF5QA==";
+router.post('/postfunction', function (req, res) {
+    request({
+        url: functionurl,
+        method: "POST",
+        json: true,
+        headers: {
+            "content-type": "application/json",
+        },
+        body: {
+            name: "azure, this is from my PWA app"
+        }
+    }, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("success");
+            res.send(response.body);
+        } else if(error){
+            console.log("error: " + error);
+            res.send("failed to call function app" + error);
+        }
+    }); 
+});
 
 module.exports = router;
