@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/offline.html', function (req, res) {
-    res.sendFile('public/offline.html');
+    res.sendFile('./public/offline.html');
 });
 
 const vapidKeys = {
