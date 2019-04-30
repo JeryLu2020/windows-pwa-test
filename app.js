@@ -1,4 +1,5 @@
-﻿var debug = require('debug');
+﻿'use strict';
+var debug = require('debug');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -56,7 +57,7 @@ app.use(function (err, req, res, next) {
     });
 });
 
-app.set('port', process.env.PORT || 1337);
+app.set('port', process.env.PORT || 5000);
 
 var server = app.listen(app.get('port'), function () {
     console.log("server started at http://localhost:" + app.get('port'));

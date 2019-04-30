@@ -1,4 +1,5 @@
-﻿var express = require('express');
+﻿'use strict';
+var express = require('express');
 var router = express.Router();
 var webpush = require('web-push');
 
@@ -10,12 +11,8 @@ router.get('/', function (req, res) {
 router.get('/offline.html', function (req, res) {
     res.sendFile('./public/offline.html');
 });
-// local key
-// const vapidKeys = {
-//     publicKey: 'BEMfRcAX4im5y-HCzekGioWNMHIt0Rt0VMZeI6K0X37CjeKZApMI3AwrDbRV5XQiJdyC_TmOaPrufp06m1L16lo',
-//     privateKey: '1UaOETa_csb83cZsJlqvib1PtHqpPYKA1B9_d6o3cDU'
-// };
 
+//webpush.generateVAPIDKeys();
 //azure key
 const vapidKeys = {
     publicKey: 'BMwXXlYzG4-WUlHU2Pi4BkaaoJ3WawH53kSW05xuIZPtttW7MQ9zHpNod6a2Pt88N5JTZZU1DiLDmNEbOxeGXHQ',
