@@ -3,7 +3,7 @@
 ## Super simple to use
 
 Live Demo:
-https://windows-pwa-test-update.azurewebsites.net/
+https://windows-pwa-express.azurewebsites.net/
 
 ## Table of contents
 
