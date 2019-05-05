@@ -1,0 +1,41 @@
+doctype html
+html
+
+head
+    style. 
+        table {
+            font-family: sans-serif;
+            font-size:15px;
+            color:#333333;
+            border: 1px solid black;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+        th {
+            border: 1px solid black;
+            padding: 10px;
+            background-color: #dedede;
+        }
+        td {
+            border: 1px solid black;
+            padding: 10px;
+            background-color: #ffffff;
+        }
+
+body
+    h1 MongoDB Data using Jade engine
+    div
+        table.table.table-hover
+            thead
+                tr 
+                    th message
+                    th id
+                    th createdAt
+                    th updatedAt
+            tbody
+                each data in mongoData
+                    tr
+                        td=data.message
+                        td=data.id
+                        td=data.createdAt
+                        td=data.updatedAt
