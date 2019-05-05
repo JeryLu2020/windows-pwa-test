@@ -51,7 +51,7 @@ router.post('/sendNotification', function (req, res) {
 });
 
 //post to function app
-var functionurl = "https://func-js-2019.azurewebsites.net/api/HttpTrigger2?code=mlLdYVKgmhuzrpaq3qSdvk5VAhDRKkM38tQra5agKeHasmonozF5QA==";
+var functionurl = "https://func-js-2019.azurewebsites.net/api/HttpTrigger1?code=9/vTMgu8UsOw4Daq/fGpKOV2nPLp1y8RTLyg72OohIYR55YCJK4Twg==";
 router.post('/postfunction', function (req, res) {
     request({
         url: functionurl,
@@ -73,5 +73,30 @@ router.post('/postfunction', function (req, res) {
         }
     }); 
 });
+
+var functionurl2 = "https://func-js-2019.azurewebsites.net/api/HttpTriggerconnectMongoDB?code=4H0k4OblZOF4SKhCq4y3Ec3lKjrXT9ztSdhAN3tCEEJBWmyKlQdq/w==";
+router.post('/postfunctionmongodb', function (req, res) {
+    request({
+        url: functionurl2,
+        method: "POST",
+        json: true,
+        headers: {
+            "content-type": "application/json",
+        },
+        body: {
+            
+        }
+    }, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("success");
+            res.send(response.body);
+        } else if(error){
+            console.log("error: " + error);
+            res.send("failed to call function app" + error);
+        }
+    }); 
+});
+
+
 
 module.exports = router;
