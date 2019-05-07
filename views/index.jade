@@ -1,9 +1,26 @@
 ﻿extends layout
 
+head
+  style. 
+    button{
+      position: relative;
+      border: 0;
+      width: 11em;
+      margin: 1em;
+      padding: 10px 20px;
+      border-radius: 2px;
+    }
+
 block content
   h1= title
   p Welcome to #{title}
-  form(method='POST' action='/postfunction')
-    button.btn.btn-primary(type='submit') Send request to Azure Function App
-  form(method='GET' action='/postfunctionmongodb')
-    button.btn.btn-primary(type='submit') Get data from MongoDB
+  div
+    form(method='POST' action='/postfunction')
+      button.btn.btn-primary(type='submit' style='width: 300px; height: 30px; border-radius: 5px') Send request to Azure Function App
+    br
+    form(method='GET' action='/postfunctionmongodb')
+      button.btn.btn-primary(type='submit' style='width: 300px; height: 30px; border-radius: 5px') Get mongodb data from Function App
+    br
+    a(href="/users")
+      button(type="button" style='width: 150px; height: 30px; border-radius: 5px') go to users
+  br

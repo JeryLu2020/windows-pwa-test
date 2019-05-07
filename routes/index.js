@@ -90,6 +90,7 @@ router.get('/postfunctionmongodb', function (req, res) {
             console.log("success");
             datas = response.body.res;
             console.log(datas);
+            
             res.render('MongoData', { mongoData: datas });
 
         } else if(error){
