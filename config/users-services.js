@@ -35,7 +35,7 @@ exports.findOne = (req, res) => {
             return res.statue(404).send('record not found' + req.params.Id);
         }
         console.log('findOne success');
-        res.send(data);
+        return res.send(data);
     })
     .catch(err=>{
         if(err.kind === 'ObjectId'){
@@ -55,7 +55,7 @@ exports.update = (req, res) => {
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('update success');
-        res.redirect('/users');
+        return res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId'){
@@ -73,7 +73,7 @@ exports.delete = (req, res) => {
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('delete success');
-        res.redirect('/users');
+        return res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId' || err.name === 'NotFound'){

@@ -34,7 +34,9 @@ body
             input(type="text", name="message", value="")
             br
             input(type="submit", value="add")
-            input(type="reset" value="reset")
+            br
+            br
+            //- input(type="reset" value="reset")
     div
         table.table.table-hover
             thead
@@ -50,6 +52,5 @@ body
                         td=data.name
                         td=data.message
                         td
-                            form(method='DELETE' action='/users/delete/#{data._id}')
-                                input(type="submit", value="delete")
+                            a.btn.btn-danger.btn-sm.margin-left(href='/users/delete/'+data._id) delete
                                 

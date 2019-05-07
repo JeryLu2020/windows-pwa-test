@@ -12,6 +12,6 @@ router.get('/:Id', userServices.findOne);
 
 router.put('/edit/:Id', userServices.update);
 
-router.delete('/delete/:Id', userServices.delete);
+router.get('/delete/:Id', userServices.delete);
 
 module.exports = router;
