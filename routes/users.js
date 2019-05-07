@@ -1,21 +1,17 @@
 ﻿var express = require('express');
 var router = express.Router();
 
+const userServices  = require('../config/users-services');
+
 /* GET users listing. */
-router.get('/', (req, res) => {
-    res.send('all');
-});
+router.post('/', userServices.create);
 
-router.post('/add',(req, res) => {
-    res.send('add');
-});
+router.get('/', userServices.findAll);
 
-router.post('/edit',(req, res) => {
-    res.send('edit');
-});
+router.get('/:Id', userServices.findOne);
 
-router.post('/delete',(req, res) => {
-    res.send('delete');
-});
+router.put('/edit/:Id', userServices.update);
+
+router.delete('/delete/:Id', userServices.delete);
 
 module.exports = router;

@@ -30,12 +30,8 @@ body
                 tr 
                     th message
                     th id
-                    th createdAt
-                    th updatedAt
             tbody
                 each data in mongoData
                     tr
                         td=data.message
                         td=data.id
-                        td=data.createdAt
-                        td=data.updatedAt

@@ -23,19 +23,33 @@ head
         }
 
 body
-    h1 MongoDB Data using Jade engine
+    h1 MongoDB Data using Jade engine. Manage all the data here
+    
+    div
+        form(method='POST' action='/users')
+            label name
+            input(type="text", name="name", value="")
+            br
+            label message
+            input(type="text", name="message", value="")
+            br
+            input(type="submit", value="add")
+            input(type="reset" value="reset")
     div
         table.table.table-hover
             thead
                 tr 
+                    th _id
+                    th name
                     th message
-                    th id
-                    th createdAt
-                    th updatedAt
+                    th operations
             tbody
-                each data in mongoData
+                each data in usersData
                     tr
+                        td=data._id
+                        td=data.name
                         td=data.message
-                        td=data.id
-                        td=data.createdAt
-                        td=data.updatedAt
+                        td
+                            form(method='DELETE' action='/users/delete/#{data._id}')
+                                input(type="submit", value="delete")
+                                
