@@ -2,8 +2,10 @@ var Hero = require('./database');
 
 exports.create = (req, res) => {
     const hero = new Hero({
-        name: req.body.name || 'Untitled name',
-        message: req.body.message || 'Untitled name'
+        first_name: req.body.first_name || 'Untitled name',
+        last_name: req.body.last_name || 'Untitled name',
+        country_name: req.body.country_name || 'Untitled name',
+        day_of_birth: req.body.day_of_birth || '',
     });
 
     hero.save()
@@ -73,7 +75,7 @@ exports.delete = (req, res) => {
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('delete success');
-        return res.redirect('/users');
+        res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId' || err.name === 'NotFound'){

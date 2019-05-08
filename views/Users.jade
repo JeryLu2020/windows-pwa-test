@@ -26,31 +26,68 @@ body
     h1 MongoDB Data using Jade engine. Manage all the data here
     
     div
-        form(method='POST' action='/users')
-            label name
-            input(type="text", name="name", value="")
+        form(action='/users', method='POST')
+            | First name:
+            input(type='text', name='first_name', placeholder='Mickey')
             br
-            label message
-            input(type="text", name="message", value="")
+            | Last name:
+            input(type='text', name='last_name', placeholder='Mouse')
             br
-            input(type="submit", value="add")
+            | Birthday:
+            input(type='date', name='day_of_birth')
             br
+            | Country name:
+            select(name='country_name')
+                - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York']
+                each item in repeation
+                    option(name="#{item}") #{item}
             br
-            //- input(type="reset" value="reset")
+            input(type='submit', value='Add Record')
+            br
+        //- button(type="submit") Show form
+
     div
         table.table.table-hover
             thead
                 tr 
-                    th _id
-                    th name
-                    th message
+                    //- th _id
+                    th first_name
+                    th middle_initial
+                    th last_name
+                    th street_address
+                    th city_name
+                    th country_name
+                    th day_of_birth
+                    th driver_license
+                    th license_state
+                    th payment_card
+                    th updatedAt
                     th operations
             tbody
                 each data in usersData
                     tr
-                        td=data._id
-                        td=data.name
-                        td=data.message
+                        //- td=data._id
                         td
-                            a.btn.btn-danger.btn-sm.margin-left(href='/users/delete/'+data._id) delete
-                                
+                            a(href='', onClick="alert('Adam!!')") #{data.first_name}
+                        td=data.middle_initial
+                        td=data.last_name
+                        td=data.street_address
+                        td=data.city_name
+                        td=data.country_name
+                        td=data.day_of_birth
+                        td=data.driver_license_number
+                        td=data.driver_license_state
+                        td=data.payment_card
+                        td=data.updatedAt
+                        td
+                            form(action="#", method="")
+                                button(type="submit") update
+                            form(action="/users/delete/#{data._id}", method="POST")
+                                button(type="submit") delete
+    
+    //- div
+    //-     button(onClick="something()") Click
+    //-     script.
+    //-         var something = function() {
+    //-             console.log('something');
+    //-         }
