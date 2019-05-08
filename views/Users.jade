@@ -68,7 +68,7 @@ body
                     tr
                         //- td=data._id
                         td
-                            a(href='', onClick="alert('Adam!!')") #{data.first_name}
+                            a(href='', onClick="alert('Hello, #{data.first_name}.#{data.last_name} from #{data.country_name}')") #{data.first_name}
                         td=data.middle_initial
                         td=data.last_name
                         td=data.street_address
