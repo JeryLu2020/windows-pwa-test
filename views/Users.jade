@@ -1,12 +1,14 @@
 doctype html
 html
 head
+    script(language='JavaScript', type='text/javascript', src='/CSS/jquery.min.js')
+    script(language='JavaScript', type='text/javascript', src='/CSS/jquery-ui.min.js')
 
 body
     h1 MongoDB Data using Jade engine. Manage all the data here
     
     div
-        button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080;') Add Record
+        button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080; border-radius:8px;') Add Record
         .modal
             .modal-content
                 span.close-button ×
@@ -38,10 +40,11 @@ body
                             - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York', 'Hawali', 'Arizona', 'Georgia', 'Virginia']
                             each item in repeation
                                 option(name="#{item}") #{item}
-                    input(type='submit', value='Add Record', style='background-color: #ADFF2F; padding: 10px; border: 1px solid #808080; width:100%;')
+                    input(type='submit', style='background-color: #ADFF2F; padding: 10px; border: 1px solid #808080; width:100%;')
 
     div
-        table.table.table-hover
+        br
+        table#tb.table.table-hover
             thead
                 tr 
                     th first_name
@@ -59,81 +62,72 @@ body
             tbody
                 each data in usersData
                     tr
-                        td
-                            a(href='', onClick="alert('Hello, #{data.first_name}.#{data.last_name} from #{data.country_name}')") #{data.first_name}
-                        td=data.middle_initial
-                        td=data.last_name
-                        td=data.street_address
-                        td=data.city_name
-                        td=data.country_name
-                        td=data.day_of_birth
-                        td=data.driver_license_number
-                        td=data.driver_license_state
-                        td=data.payment_card
-                        td=data.updatedAt
-                        td
-                            button.trigger2 Update
-                            .modal2
-                                .modal-content2
-                                    span.close-button2 ×
-                                    form(action='/users/edit/#{data._id}', method='POST')
-                                        .row
-                                            label First name:
-                                            input(type='text', name='first_name', value='#{data.first_name}')
-                                        .row
-                                            label Middle_initial:
-                                            input(type='text', name='middle_initial', value='#{data.middle_initial}')
-                                        .row
-                                            label Last name:
-                                            input(type='text', name='last_name', value='#{data.last_name}')
-                                        .row
-                                            label Street_address:
-                                            input(type='text', name='street_address', value='#{data.street_address}')
-                                        .row
-                                            label City_name:
-                                            input(type='text', name='city_name', value='#{data.city_name}')
-                                        .row
-                                            label Payment_card:
-                                            input(type='text', name='payment_card', value='#{data.payment_card}')
-                                        .row
-                                            label Birthday:
-                                            input(type='date', name='day_of_birth')
-                                        .row
-                                            label Country:
-                                            select(name='country_name')
-                                                - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York', 'Hawali', 'Arizona', 'Georgia', 'Virginia']
-                                                each item in repeation
-                                                    option(name="#{item}") #{item}
-                                        input(type='submit', value='Update', style='padding: 10px; border: 1px solid #808080; width:100%;')
+                        //- td #{data._id}
+                        td(value='2' key='#{data._id}' name='first_name') #{data.first_name}
+                        td(value='2') #{data.middle_initial}
+                        td(value='2') #{data.last_name}
+                        td(value='2') #{data.street_address}
+                        td(value='2') #{data.city_name}
+                        td(value='1') #{data.country_name}
+                        td(value='1') #{data.day_of_birth}
+                        td(value='1') #{data.driver_license_number}
+                        td(value='1') #{data.driver_license_state}
+                        td(value='1') #{data.payment_card}
+                        td(value='1') #{data.updatedAt}
+                        td(value='1')
+                            input(type="button", value="Edit", style="border-color:#808080; background-color: #ffffff")
                             form(action="/users/delete/#{data._id}", method="POST")
                                 button(type="submit") Delete
+                script.
+                    $('#tb :button').click(function () {
+                        var toEdit = this.value == 'Edit';
+                        this.value = toEdit ? 'OK' : 'Edit';
+                        $(this).closest('tr').find('td').not(':last').each(function () {
+                            var id = $(this).attr('key');
+                            var name = $(this).attr('name');
+                            var posturl = "/users/edit/"+ id;
+                            console.log(posturl);
+                            if ( toEdit && ($(this).attr('value')==2))
+                            {
+                                this.innerHTML = '<input class="text" type="text" style="width:100%; border: solid; border-width: 1px" value="'+this.innerHTML.replace(/"/g,'&quot;')+'"/>';
+                            }
+                            else 
+                            {
+                                this.innerHTML = this.firstChild.value.replace(/</g, '&lt;');
+                                var newvalue = this.innerHTML;
+                                console.log(name);
+                                console.log(newvalue);
+                                if( this.innerHTML != name && this.innerHTML != 'N/A' && name != null){
+                                    console.log('ready to send ajax call ' + posturl + '.'+ name + '.' + newvalue)
+                                    $.ajax({
+                                        type: "POST",
+                                        url: posturl,
+                                        data: { name: newvalue },
+                                        success: function(data){
+                                            console.log(data);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    });
+
 
     script.
         var modal = document.querySelector(".modal");
-        var modal2 = document.querySelector(".modal2");
         var trigger = document.querySelector(".trigger");
-        var trigger2 = document.querySelector(".trigger2");
         var closeButton = document.querySelector(".close-button");
-        var closeButton2 = document.querySelector(".close-button2");
 
         function toggleModal() {
             modal.classList.toggle("show-modal");
-        }
-        function toggleModal2() {
-            modal2.classList.toggle("show-modal2");
         }
         function windowOnClick(event) {
             if (event.target === modal) {
                 toggleModal();
             }
-            if (event.target === modal2) {
-                toggleModal2();
-            }
         }
         trigger.addEventListener("click", toggleModal);
-        trigger2.addEventListener("click", toggleModal2);
         closeButton.addEventListener("click", toggleModal);
-        closeButton2.addEventListener("click", toggleModal2);
         window.addEventListener("click", windowOnClick);
 
     style.
@@ -210,45 +204,6 @@ body
             background-color: darkgray;
         }
         .show-modal {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1.0);
-            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-        }
-        .modal2 {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(1.1);
-        }
-        .modal-content2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 1rem 1.5rem;
-            width: 20rem;
-            border-radius: 0.5rem;
-        }
-        .close-button2 {
-            float: right;
-            width: 1.5rem;
-            line-height: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 0.25rem;
-            background-color: lightgray;
-        }
-        .close-button2:hover {
-            background-color: darkgray;
-        }
-        .show-modal2 {
             opacity: 1;
             visibility: visible;
             transform: scale(1.0);
