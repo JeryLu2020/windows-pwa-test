@@ -6,40 +6,39 @@ body
     h1 MongoDB Data using Jade engine. Manage all the data here
     
     div
-        button.trigger(
-            style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080;') Add Record
-        .modal
-            .modal-content
-                span.close-button ×
-                form(action='/users', method='POST')
-                    .row
-                        label First name:
-                        input(type='text', name='first_name', placeholder='')
-                    .row
-                        label Middle_initial:
-                        input(type='text', name='middle_initial', placeholder='')
-                    .row
-                        label Last name:
-                        input(type='text', name='last_name', placeholder='')
-                    .row
-                        label Street_address:
-                        input(type='text', name='street_address', placeholder='')
-                    .row
-                        label City_name:
-                        input(type='text', name='city_name', placeholder='')
-                    .row
-                        label Payment_card:
-                        input(type='text', name='payment_card', placeholder='')
-                    .row
-                        label Birthday:
-                        input(type='date', name='day_of_birth')
-                    .row
-                        label Country:
-                        select(name='country_name')
-                            - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York']
-                            each item in repeation
-                                option(name="#{item}") #{item}
-                    input(type='submit', value='Add Record', style='background-color: #ADFF2F; padding: 5px; border: 1px solid #808080; width:100%;')
+        //- button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080;') Add Record
+        //- .modal
+        //-     .modal-content
+        //-         span.close-button ×
+        //-         form(action='/users', method='POST')
+        //-             .row
+        //-                 label First name:
+        //-                 input(type='text', name='first_name', placeholder='')
+        //-             .row
+        //-                 label Middle_initial:
+        //-                 input(type='text', name='middle_initial', placeholder='')
+        //-             .row
+        //-                 label Last name:
+        //-                 input(type='text', name='last_name', placeholder='')
+        //-             .row
+        //-                 label Street_address:
+        //-                 input(type='text', name='street_address', placeholder='')
+        //-             .row
+        //-                 label City_name:
+        //-                 input(type='text', name='city_name', placeholder='')
+        //-             .row
+        //-                 label Payment_card:
+        //-                 input(type='text', name='payment_card', placeholder='')
+        //-             .row
+        //-                 label Birthday:
+        //-                 input(type='date', name='day_of_birth')
+        //-             .row
+        //-                 label Country:
+        //-                 select(name='country_name')
+        //-                     - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York', 'Hawali', 'Arizona', 'Georgia', 'Virginia']
+        //-                     each item in repeation
+        //-                         option(name="#{item}") #{item}
+        //-             input(type='submit', value='Add Record', style='background-color: #ADFF2F; padding: 5px; border: 1px solid #808080; width:100%;')
 
     div
         table.table.table-hover
@@ -73,11 +72,26 @@ body
                         td=data.payment_card
                         td=data.updatedAt
                         td
-                            form(action="#", method="")
-                                button(type="submit") update
+                            //- button.trigger Update
+                            //- .modal
+                            //-     .modal-content
+                            //-         span.close-button ×
+                            //-         h1 Hello
                             form(action="/users/delete/#{data._id}", method="POST")
-                                button(type="submit") delete
+                                button(type="submit") Delete
     
+    div
+        button.trigger Update
+        .modal
+            .modal-content
+                span.close-button ×
+                h1 Hello
+    div
+        button.trigger Update2
+        .modal
+            .modal-content
+                span.close-button ×
+                h1 Hello
 
     script.
         var modal = document.querySelector(".modal");
@@ -175,3 +189,7 @@ body
             transform: scale(1.0);
             transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
         }
+        
+
+
+# http://jsfiddle.net/KDQab/1/

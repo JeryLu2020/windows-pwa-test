@@ -41,7 +41,7 @@ exports.findOne = (req, res) => {
             return res.statue(404).send('record not found' + req.params.Id);
         }
         console.log('findOne success');
-        return res.send(data);
+        res.send(data);
     })
     .catch(err=>{
         if(err.kind === 'ObjectId'){
@@ -53,15 +53,21 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
     Hero.findByIdAndUpdate(req.params.Id, {
-        name: req.body.name || "Untitled name",
-        message: req.body.message
+        first_name: req.body.first_name || 'Unknown name',
+        middle_initial: req.body.middle_initial || 'N/A',
+        last_name: req.body.last_name || 'N/A',
+        street_address: req.body.street_address || 'N/A',
+        city_name: req.body.city_name || 'N/A',
+        payment_card: req.body.payment_card || 'N/A',
+        country_name: req.body.country_name || 'N/A',
+        day_of_birth: req.body.day_of_birth || '',
     }, {new: true})
     .then(data => {
         if(!data){
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('update success');
-        return res.redirect('/users');
+        res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId'){
