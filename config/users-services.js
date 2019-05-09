@@ -2,9 +2,13 @@ var Hero = require('./database');
 
 exports.create = (req, res) => {
     const hero = new Hero({
-        first_name: req.body.first_name || 'Untitled name',
-        last_name: req.body.last_name || 'Untitled name',
-        country_name: req.body.country_name || 'Untitled name',
+        first_name: req.body.first_name || 'Unknown name',
+        middle_initial: req.body.middle_initial || 'N/A',
+        last_name: req.body.last_name || 'N/A',
+        street_address: req.body.street_address || 'N/A',
+        city_name: req.body.city_name || 'N/A',
+        payment_card: req.body.payment_card || 'N/A',
+        country_name: req.body.country_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
     });
 
