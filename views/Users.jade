@@ -1,15 +1,14 @@
 doctype html
 html
 head
-    script(type='text/javascript' src='jquery-min.js')
-    script(type='text/javascript' src='jquery-ui.min.js')
-    link(rel='stylesheet', src='jquery-ui.css')
+    script(language='JavaScript', type='text/javascript', src='/CSS/jquery.min.js')
+    script(language='JavaScript', type='text/javascript', src='/CSS/jquery-ui.min.js')
 
 body
     h1 MongoDB Data using Jade engine. Manage all the data here
     
     div
-        button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080;') Add Record
+        button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080; border-radius:8px;') Add Record
         .modal
             .modal-content
                 span.close-button ×
@@ -41,10 +40,11 @@ body
                             - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York', 'Hawali', 'Arizona', 'Georgia', 'Virginia']
                             each item in repeation
                                 option(name="#{item}") #{item}
-                    input(type='submit', value='Add Record', style='background-color: #ADFF2F; padding: 5px; border: 1px solid #808080; width:100%;')
+                    input(type='submit', style='background-color: #ADFF2F; padding: 10px; border: 1px solid #808080; width:100%;')
 
     div
-        table.table.table-hover
+        br
+        table#tb.table.table-hover
             thead
                 tr 
                     th first_name
@@ -62,25 +62,55 @@ body
             tbody
                 each data in usersData
                     tr
-                        td
-                            a(href='', onClick="alert('Hello, #{data.first_name}.#{data.last_name} from #{data.country_name}')") #{data.first_name}
-                        td=data.middle_initial
-                        td=data.last_name
-                        td=data.street_address
-                        td=data.city_name
-                        td=data.country_name
-                        td=data.day_of_birth
-                        td=data.driver_license_number
-                        td=data.driver_license_state
-                        td=data.payment_card
-                        td=data.updatedAt
-                        td
+                        //- td #{data._id}
+                        td(value='2' key='#{data._id}' name='first_name') #{data.first_name}
+                        td(value='2') #{data.middle_initial}
+                        td(value='2') #{data.last_name}
+                        td(value='2') #{data.street_address}
+                        td(value='2') #{data.city_name}
+                        td(value='1') #{data.country_name}
+                        td(value='1') #{data.day_of_birth}
+                        td(value='1') #{data.driver_license_number}
+                        td(value='1') #{data.driver_license_state}
+                        td(value='1') #{data.payment_card}
+                        td(value='1') #{data.updatedAt}
+                        td(value='1')
+                            input(type="button", value="Edit", style="border-color:#808080; background-color: #ffffff")
                             form(action="/users/delete/#{data._id}", method="POST")
                                 button(type="submit") Delete
-    
-    div
-        p test pop-up
-        
+                script.
+                    $('#tb :button').click(function () {
+                        var toEdit = this.value == 'Edit';
+                        this.value = toEdit ? 'OK' : 'Edit';
+                        $(this).closest('tr').find('td').not(':last').each(function () {
+                            var id = $(this).attr('key');
+                            var name = $(this).attr('name');
+                            var posturl = "/users/edit/"+ id;
+                            console.log(posturl);
+                            if ( toEdit && ($(this).attr('value')==2))
+                            {
+                                this.innerHTML = '<input class="text" type="text" style="width:100%; border: solid; border-width: 1px" value="'+this.innerHTML.replace(/"/g,'&quot;')+'"/>';
+                            }
+                            else 
+                            {
+                                this.innerHTML = this.firstChild.value.replace(/</g, '&lt;');
+                                var newvalue = this.innerHTML;
+                                console.log(name);
+                                console.log(newvalue);
+                                if( this.innerHTML != name && this.innerHTML != 'N/A' && name != null){
+                                    console.log('ready to send ajax call ' + posturl + '.'+ name + '.' + newvalue)
+                                    $.ajax({
+                                        type: "POST",
+                                        url: posturl,
+                                        data: { name: newvalue },
+                                        success: function(data){
+                                            console.log(data);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    });
 
     script.
         
@@ -182,5 +212,3 @@ body
         }
 
 
-p http://jsfiddle.net/KDQab/1/
-p https://andwecode.com/create-popup-login-and-signup-form/
