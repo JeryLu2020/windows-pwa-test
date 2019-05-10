@@ -78,39 +78,6 @@ body
                             input(type="button", value="Edit", style="border-color:#808080; background-color: #ffffff")
                             form(action="/users/delete/#{data._id}", method="POST")
                                 button(type="submit") Delete
-                script.
-                    $('#tb :button').click(function () {
-                        var toEdit = this.value == 'Edit';
-                        this.value = toEdit ? 'OK' : 'Edit';
-                        $(this).closest('tr').find('td').not(':last').each(function () {
-                            var id = $(this).attr('key');
-                            var name = $(this).attr('name');
-                            var posturl = "/users/edit/"+ id;
-                            console.log(posturl);
-                            if ( toEdit && ($(this).attr('value')==2))
-                            {
-                                this.innerHTML = '<input class="text" type="text" style="width:100%; border: solid; border-width: 1px" value="'+this.innerHTML.replace(/"/g,'&quot;')+'"/>';
-                            }
-                            else 
-                            {
-                                this.innerHTML = this.firstChild.value.replace(/</g, '&lt;');
-                                var newvalue = this.innerHTML;
-                                console.log(name);
-                                console.log(newvalue);
-                                if( this.innerHTML != name && this.innerHTML != 'N/A' && name != null){
-                                    console.log('ready to send ajax call ' + posturl + '.'+ name + '.' + newvalue)
-                                    $.ajax({
-                                        type: "POST",
-                                        url: posturl,
-                                        data: { name: newvalue },
-                                        success: function(data){
-                                            console.log(data);
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    });
 
 
     script.
