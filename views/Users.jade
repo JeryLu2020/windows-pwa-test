@@ -1,6 +1,9 @@
 doctype html
 html
 head
+    script(type='text/javascript' src='jquery-min.js')
+    script(type='text/javascript' src='jquery-ui.min.js')
+    link(rel='stylesheet', src='jquery-ui.css')
 
 body
     h1 MongoDB Data using Jade engine. Manage all the data here
@@ -72,28 +75,16 @@ body
                         td=data.payment_card
                         td=data.updatedAt
                         td
-                            //- button.trigger Update
-                            //- .modal
-                            //-     .modal-content
-                            //-         span.close-button ×
-                            //-         h1 Hello
                             form(action="/users/delete/#{data._id}", method="POST")
                                 button(type="submit") Delete
     
     div
-        button.trigger Update
-        .modal
-            .modal-content
-                span.close-button ×
-                h1 Hello
-    div
-        button.trigger Update2
-        .modal
-            .modal-content
-                span.close-button ×
-                h1 Hello
+        p test pop-up
+        
 
     script.
+        
+        // add button
         var modal = document.querySelector(".modal");
         var trigger = document.querySelector(".trigger");
         var closeButton = document.querySelector(".close-button");
@@ -189,7 +180,7 @@ body
             transform: scale(1.0);
             transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
         }
-        
 
 
-# http://jsfiddle.net/KDQab/1/
+p http://jsfiddle.net/KDQab/1/
+p https://andwecode.com/create-popup-login-and-signup-form/
