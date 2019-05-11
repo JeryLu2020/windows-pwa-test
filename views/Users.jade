@@ -1,46 +1,54 @@
 doctype html
 html
 head
-    script(language='JavaScript', type='text/javascript', src='/CSS/jquery.min.js')
-    script(language='JavaScript', type='text/javascript', src='/CSS/jquery-ui.min.js')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    script(src='/bootstrap/js/jquery-3.4.1.js')
+    script(src='/bootstrap/js/jquery-3.3.1.slim.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+    script(src='/bootstrap/js/popper.min.js')
 
 body
     h1 MongoDB Data using Jade engine. Manage all the data here
     
     div
-        button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080; border-radius:8px;') Add Record
-        .modal
-            .modal-content
-                span.close-button ×
-                form(action='/users', method='POST')
-                    .row
-                        label First name:
-                        input(type='text', name='first_name', placeholder='')
-                    .row
-                        label Middle_initial:
-                        input(type='text', name='middle_initial', placeholder='')
-                    .row
-                        label Last name:
-                        input(type='text', name='last_name', placeholder='')
-                    .row
-                        label Street_address:
-                        input(type='text', name='street_address', placeholder='')
-                    .row
-                        label City_name:
-                        input(type='text', name='city_name', placeholder='')
-                    .row
-                        label Payment_card:
-                        input(type='text', name='payment_card', placeholder='')
-                    .row
-                        label Birthday:
-                        input(type='date', name='day_of_birth')
-                    .row
-                        label Country:
-                        select(name='country_name')
-                            - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York', 'Hawali', 'Arizona', 'Georgia', 'Virginia']
-                            each item in repeation
-                                option(name="#{item}") #{item}
-                    input(type='submit', style='background-color: #ADFF2F; padding: 10px; border: 1px solid #808080; width:100%;')
+        button.btn.btn-success(type='button', data-toggle='modal', data-target='#exampleModal')
+            | Add Record
+        #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog(role='document')
+                .modal-content
+                    .modal-header
+                        h5#exampleModalLabel.modal-title Add Record
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                        form(action='/users', method='POST', id='add-record')
+                            .form-group
+                                label.col-form-label(for='recipient-name') first_name:
+                                    input#recipient-name.form-controlinput(type='text', name='first_name', placeholder='')
+                            .form-group
+                                label.col-form-label(for='message-text') middle_initial:
+                                    input#recipient-name.form-controlinput(type='text', name='middle_initial', placeholder='')
+                            .form-group
+                                label.col-form-label(for='message-text') last_name:
+                                    input#recipient-name.form-controlinput(type='text', name='last_name', placeholder='')
+                            .form-group
+                                label.col-form-label(for='message-text') street_address:
+                                    input#recipient-name.form-controlinput(type='text', name='street_address', placeholder='')
+                            .form-group
+                                label.col-form-label(for='message-text') day_of_birth:
+                                    input#recipient-name.form-controlinput(type='date', name='day_of_birth', placeholder='')
+                            .form-group
+                                label.col-form-label(for='message-text') first_name:
+                                    select#inlineFormCustomSelect.custom-select.mr-sm-2(name='country_name')
+                                        option(selected='Alabama') Alabama
+                                        option(value='California') California
+                                        option(value='Texas') Texas
+                                        option(value='New York') New York
+                                        option(value='Arizona') Arizona
+                                        option(value='Georgia') Georgia
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
+                        button.btn.btn-primary(type='button', onclick="document.getElementById('add-record').submit();") Submit
 
     div
         br
@@ -75,26 +83,25 @@ body
                         td(value='1') #{data.payment_card}
                         td(value='1') #{data.updatedAt}
                         td(value='1')
-                            input(type="button", value="Edit", style="border-color:#808080; background-color: #ffffff")
+                            button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModal', data-whatever='@fat') Edit
+                            #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                .modal-dialog(role='document')
+                                    .modal-content
+                                        .modal-header
+                                            h5#exampleModalLabel.modal-title Add Record
+                                        .modal-body
+                                            form(action='/users', method='POST', id='edit-record')
+                                                .form-group
+                                                    label.col-form-label(for='recipient-name') Recipient:
+                                                        input#recipient-name.form-control(type='text')
+                                                .form-group
+                                                    label.col-form-label(for='message-text') Message:
+                                                        input#recipient-name.form-control(type='text')
+                                        .modal-footer
+                                            button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
+                                            button.btn.btn-primary(type='button', id="add-submit", onclick="document.getElementById('edit-record').submit();") Submit
                             form(action="/users/delete/#{data._id}", method="POST")
-                                button(type="submit") Delete
-
-    script.
-        var modal = document.querySelector(".modal");
-        var trigger = document.querySelector(".trigger");
-        var closeButton = document.querySelector(".close-button");
-
-        function toggleModal() {
-            modal.classList.toggle("show-modal");
-        }
-        function windowOnClick(event) {
-            if (event.target === modal) {
-                toggleModal();
-            }
-        }
-        trigger.addEventListener("click", toggleModal);
-        closeButton.addEventListener("click", toggleModal);
-        window.addEventListener("click", windowOnClick);
+                                button.btn.btn-primary(type="submit") Delete
 
     style.
         form {
@@ -136,46 +143,6 @@ body
         div.row{
             display:table-row;
         }
-        .modal {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(1.1);
-        }
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 1rem 1.5rem;
-            width: 20rem;
-            border-radius: 0.5rem;
-        }
-        .close-button {
-            float: right;
-            width: 1.5rem;
-            line-height: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 0.25rem;
-            background-color: lightgray;
-        }
-        .close-button:hover {
-            background-color: darkgray;
-        }
-        .show-modal {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1.0);
-            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-        }
 
 
-//- p http://jsfiddle.net/KDQab/1/
-//- p https://andwecode.com/create-popup-login-and-signup-form/
+//- https://getbootstrap.com/docs/4.0/components/modal/#live-demo
