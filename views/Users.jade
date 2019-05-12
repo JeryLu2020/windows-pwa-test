@@ -1,214 +1,123 @@
 doctype html
 html
 head
-    script(language='JavaScript', type='text/javascript', src='/CSS/jquery.min.js')
-    script(language='JavaScript', type='text/javascript', src='/CSS/jquery-ui.min.js')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    script(src='/bootstrap/js/jquery-3.4.1.js')
+    script(src='/bootstrap/js/jquery-3.3.1.slim.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+    script(src='/bootstrap/js/popper.min.js')
 
 body
-    h1 MongoDB Data using Jade engine. Manage all the data here
-    
-    div
-        button.trigger(style='background-color: #7FFF00; padding: 15px 32px; font-size: 16px; text-align: center; border: 1px solid #808080; border-radius:8px;') Add Record
-        .modal
-            .modal-content
-                span.close-button ×
-                form(action='/users', method='POST')
-                    .row
-                        label First name:
-                        input(type='text', name='first_name', placeholder='')
-                    .row
-                        label Middle_initial:
-                        input(type='text', name='middle_initial', placeholder='')
-                    .row
-                        label Last name:
-                        input(type='text', name='last_name', placeholder='')
-                    .row
-                        label Street_address:
-                        input(type='text', name='street_address', placeholder='')
-                    .row
-                        label City_name:
-                        input(type='text', name='city_name', placeholder='')
-                    .row
-                        label Payment_card:
-                        input(type='text', name='payment_card', placeholder='')
-                    .row
-                        label Birthday:
-                        input(type='date', name='day_of_birth')
-                    .row
-                        label Country:
-                        select(name='country_name')
-                            - repeation = [ 'Alabama', 'California', 'Texas', 'Florida', 'New York', 'Hawali', 'Arizona', 'Georgia', 'Virginia']
-                            each item in repeation
-                                option(name="#{item}") #{item}
-                    input(type='submit', style='background-color: #ADFF2F; padding: 10px; border: 1px solid #808080; width:100%;')
-
-    div
-        br
-        table#tb.table.table-hover
-            thead
-                tr 
-                    th first_name
-                    th middle_initial
-                    th last_name
-                    th address
-                    th city
-                    th country
-                    th day_of_birth
-                    th driver_license
-                    th license_state
-                    th payment_card
-                    th updatedAt
-                    th operations
-            tbody
-                each data in usersData
-                    tr
-                        //- td #{data._id}
-                        td(value='2' key='#{data._id}' name='first_name') #{data.first_name}
-                        td(value='2') #{data.middle_initial}
-                        td(value='2') #{data.last_name}
-                        td(value='2') #{data.street_address}
-                        td(value='2') #{data.city_name}
-                        td(value='1') #{data.country_name}
-                        td(value='1') #{data.day_of_birth}
-                        td(value='1') #{data.driver_license_number}
-                        td(value='1') #{data.driver_license_state}
-                        td(value='1') #{data.payment_card}
-                        td(value='1') #{data.updatedAt}
-                        td(value='1')
-                            input(type="button", value="Edit", style="border-color:#808080; background-color: #ffffff")
-                            form(action="/users/delete/#{data._id}", method="POST")
-                                button(type="submit") Delete
-                script.
-                    $('#tb :button').click(function () {
-                        var toEdit = this.value == 'Edit';
-                        this.value = toEdit ? 'OK' : 'Edit';
-                        $(this).closest('tr').find('td').not(':last').each(function () {
-                            var id = $(this).attr('key');
-                            var name = $(this).attr('name');
-                            var posturl = "/users/edit/"+ id;
-                            console.log(posturl);
-                            if ( toEdit && ($(this).attr('value')==2))
-                            {
-                                this.innerHTML = '<input class="text" type="text" style="width:100%; border: solid; border-width: 1px" value="'+this.innerHTML.replace(/"/g,'&quot;')+'"/>';
-                            }
-                            else 
-                            {
-                                this.innerHTML = this.firstChild.value.replace(/</g, '&lt;');
-                                var newvalue = this.innerHTML;
-                                console.log(name);
-                                console.log(newvalue);
-                                if( this.innerHTML != name && this.innerHTML != 'N/A' && name != null){
-                                    console.log('ready to send ajax call ' + posturl + '.'+ name + '.' + newvalue)
-                                    $.ajax({
-                                        type: "POST",
-                                        url: posturl,
-                                        data: { name: newvalue },
-                                        success: function(data){
-                                            console.log(data);
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    });
-
-    script.
+    .container-fluid
+        h1 MongoDB Data using Jade engine. Manage all the data here
         
-        // add button
-        var modal = document.querySelector(".modal");
-        var trigger = document.querySelector(".trigger");
-        var closeButton = document.querySelector(".close-button");
+        div
+            button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal')
+                | Add Record
+            #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addModalLabel', aria-hidden='true')
+                .modal-dialog(role='document')
+                    .modal-content
+                        .modal-header
+                            h3#addModalLabel.modal-title Add Record
+                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        .modal-body
+                            form(action='/users', method='POST', id='add-record')
+                                .form-group
+                                    label.col-form-label first_name:
+                                        input.form-controlinput(type='text', name='first_name', placeholder='')
+                                .form-group
+                                    label.col-form-label middle_initial:
+                                        input.form-controlinput(type='text', name='middle_initial', placeholder='')
+                                .form-group
+                                    label.col-form-label last_name:
+                                        input.form-controlinput(type='text', name='last_name', placeholder='')
+                                .form-group
+                                    label.col-form-label street_address:
+                                        input.form-controlinput(type='text', name='street_address', placeholder='')
+                                .form-group
+                                    label.col-form-label day_of_birth:
+                                        input.form-controlinput(type='date', name='day_of_birth', placeholder='')
+                                .form-group
+                                    label.col-form-label first_name:
+                                        select.custom-select.mr-sm-2(name='country_name')
+                                            option(selected='Alabama') Alabama
+                                            option(value='California') California
+                                            option(value='Texas') Texas
+                                            option(value='New York') New York
+                                            option(value='Arizona') Arizona
+                                            option(value='Georgia') Georgia
+                        .modal-footer
+                            button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
+                            button.btn.btn-primary(type='button', onclick="document.getElementById('add-record').submit();") Submit
 
-        function toggleModal() {
-            modal.classList.toggle("show-modal");
-        }
-        function windowOnClick(event) {
-            if (event.target === modal) {
-                toggleModal();
-            }
-        }
-        trigger.addEventListener("click", toggleModal);
-        closeButton.addEventListener("click", toggleModal);
-        window.addEventListener("click", windowOnClick);
+        div
+            br
+            table.table.table-striped
+                thead
+                    tr 
+                        th ID
+                        th First_name
+                        th Middle_initial
+                        th Last_name
+                        th Address
+                        th City
+                        th Country
+                        th Day_of_birth
+                        th Driver_license
+                        th License_state
+                        th Payment_card
+                        th UpdatedAt
+                        th Operations
+                tbody
+                    each data in usersData
+                        tr
+                            td #{data._id}
+                            td #{data.first_name}
+                            td #{data.middle_initial}
+                            td #{data.last_name}
+                            td #{data.street_address}
+                            td #{data.city_name}
+                            td #{data.country_name}
+                            td #{data.day_of_birth}
+                            td #{data.driver_license_number}
+                            td #{data.driver_license_state}
+                            td #{data.payment_card}
+                            td #{data.updatedAt}
+                            td
+                                button.btn.btn-info(type='button', data-toggle='modal', data-target='#editModal', data-whatever='#{data._id}') Edit
+                                #editModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true')
+                                    .modal-dialog(role='dialog')
+                                        .modal-content
+                                            .modal-header
+                                                h3#editModalLabel.modal-title Edit Record
+                                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                            .modal-body
+                                                form(action='/users/edit/#{data._id}', method='POST', id="edit-record")
+                                                    .form-group
+                                                        label.col-form-label first_name:
+                                                            input.form-controlinput(type='text', name='first_name', value='#{data.first_name}')
+                                                    .form-group
+                                                        label.col-form-label middle_initial:
+                                                            input.form-controlinput(type='text', name='middle_initial', value='#{data.middle_initial}')
+                                                    .form-group
+                                                        label.col-form-label last_name:
+                                                            input.form-controlinput(type='text', name='last_name', value='#{data.last_name}')
+                                                    .form-group
+                                                        label.col-form-label street_address:
+                                                            input.form-controlinput(type='text', name='street_address', value='#{data.street_address}')
+                                                    .form-group
+                                                        label.col-form-label country_name:
+                                                            select#inlineFormCustomSelect.custom-select.mr-sm-2(name='country_name', value='#{data.country_name}')
+                                                                option(selected='Alabama') Alabama
+                                                                option(value='California') California
+                                                                option(value='Texas') Texas
+                                                                option(value='New York') New York
+                                                                option(value='Arizona') Arizona
+                                                                option(value='Georgia') Georgia
+                                            .modal-footer
+                                                button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
+                                                button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record').submit();") Submit
+                                form(action="/users/delete/#{data._id}", method="POST")
+                                    button.btn.btn-outline-info(type="submit") Delete
 
-    style.
-        form {
-            font-family: sans-serif;
-            font-size:12px;
-        }
-        table {
-            font-family: sans-serif;
-            font-size:15px;
-            color:#333333;
-            border: 1px solid black;
-            border-color: #666666;
-            border-collapse: collapse;
-        }
-        th {
-            border: 1px solid black;
-            padding: 10px;
-            background-color: #dedede;
-        }
-        td {
-            border: 1px solid black;
-            padding: 10px;
-            background-color: #ffffff;
-        }
-        label {
-            display: table-cell;
-            text-align: left;
-        }
-        input {
-            margin-top: 0.3rem;
-            display: table-cell;
-            border-style: solid;
-            border-color: #E6E6FA;
-            border-top-width: 1px;
-            border-right-width: 1px; 
-            border-bottom-width: 1px;
-            border-left-width: 1px;
-        }
-        div.row{
-            display:table-row;
-        }
-        .modal {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(1.1);
-        }
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 1rem 1.5rem;
-            width: 20rem;
-            border-radius: 0.5rem;
-        }
-        .close-button {
-            float: right;
-            width: 1.5rem;
-            line-height: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 0.25rem;
-            background-color: lightgray;
-        }
-        .close-button:hover {
-            background-color: darkgray;
-        }
-        .show-modal {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1.0);
-            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-        }
-
-
+//- https://getbootstrap.com/docs/4.0/components/modal/#live-demo

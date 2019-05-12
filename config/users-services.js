@@ -1,6 +1,7 @@
 var Hero = require('./database');
 
 exports.create = (req, res) => {
+
     const hero = new Hero({
         first_name: req.body.first_name || 'Unknown name',
         middle_initial: req.body.middle_initial || 'N/A',
@@ -67,7 +68,7 @@ exports.update = (req, res) => {
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('update success');
-        return res.redirect('/users');
+        res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId'){
@@ -85,7 +86,7 @@ exports.delete = (req, res) => {
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('delete success');
-        return res.redirect('/users');
+        res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId' || err.name === 'NotFound'){
