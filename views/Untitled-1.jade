@@ -2,10 +2,12 @@ doctype html
 html
 head
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/footable.bootstrap.min.css')
     script(src='/bootstrap/js/jquery-3.4.1.js')
     script(src='/bootstrap/js/jquery-3.3.1.slim.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/bootstrap/js/popper.min.js')
+    script(src='/bootstrap/js/footable.min.js')
 
 body
     .container-fluid
@@ -19,6 +21,7 @@ body
                     .modal-content
                         .modal-header
                             h3#addModalLabel.modal-title Add Record
+                            button.close(type='button', data-dismiss='modal', aria-label='Close')
                         .modal-body
                             form(action='/users', method='POST', id='add-record')
                                 .form-group
@@ -48,7 +51,6 @@ body
                         .modal-footer
                             button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
                             button.btn.btn-primary(type='button', onclick="document.getElementById('add-record').submit();") Submit
-                            
     .container-fluid
         div
             br
@@ -84,36 +86,40 @@ body
                             td #{data.payment_card}
                             td #{data.updatedAt}
                             td
-                                button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModal', id='parent', value='#{data._id}', onclick='parent()')
-                                    | #{data._id}
-                                #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true')
-                                    |  #{data._id}
-                                    .modal-dialog
-                                        .modal-content 
+                                button.btn.btn-info(type='button', data-toggle='modal', data-target='#editModal') Edit
+                                #editModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true')
+                                    .modal-dialog.modal-dialog-centered(role='document')
+                                        .modal-content
                                             .modal-header
-                                                h3#editModalLabel.modal-title Edit Record 
+                                                h3#editModalLabel.modal-title Edit Record
+                                                button.close(type='button', data-dismiss='modal', aria-label='Close')
                                             .modal-body
                                                 form(action='/users/edit/#{data._id}', method='POST', id="edit-record")
                                                     .form-group
-                                                        label.col-form-label(for='first_name') first_name:
-                                                            input#first_name.form-controlinput(type='text', name='first_name', value='#{data.first_name}')
+                                                        label.col-form-label first_name:
+                                                            input.form-controlinput(type='text', name='first_name', value='#{data.first_name}')
+                                                    .form-group
+                                                        label.col-form-label middle_initial:
+                                                            input.form-controlinput(type='text', name='middle_initial', value='#{data.middle_initial}')
+                                                    .form-group
+                                                        label.col-form-label last_name:
+                                                            input.form-controlinput(type='text', name='last_name', value='#{data.last_name}')
+                                                    .form-group
+                                                        label.col-form-label street_address:
+                                                            input.form-controlinput(type='text', name='street_address', value='#{data.street_address}')
+                                                    .form-group
+                                                        label.col-form-label country_name:
+                                                            select#inlineFormCustomSelect.custom-select.mr-sm-2(name='country_name', value='#{data.country_name}')
+                                                                option(selected='Alabama') Alabama
+                                                                option(value='California') California
+                                                                option(value='Texas') Texas
+                                                                option(value='New York') New York
+                                                                option(value='Arizona') Arizona
+                                                                option(value='Georgia') Georgia
                                             .modal-footer
                                                 button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
-                                                button.btn.btn-primary(type='button', onclick="editsubmit()") Submit
+                                                button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record').submit();") Submit
                                 form(action="/users/delete/#{data._id}", method="POST")
                                     button.btn.btn-outline-info(type="submit") Delete
-                                script.
-                                    var parentId = document.getElementById('parent').value;
-                                    function parent(){
-                                        console.log(parentId);
-                                        console.log('button clicked');
-                                    }
 
-                                    function editsubmit(){
-                                        document.getElementById('edit-record').submit();
-                                    }
-
-
-
-//-   https://andwecode.com/create-popup-login-and-signup-form/  
 //- https://getbootstrap.com/docs/4.0/components/modal/#live-demo

@@ -67,6 +67,7 @@ exports.update = (req, res) => {
         if(!data){
             return res.status(404).send('record not found' + req.params.Id);
         }
+        console.log(data._id);
         console.log('update success');
         res.redirect('/users');
     })
