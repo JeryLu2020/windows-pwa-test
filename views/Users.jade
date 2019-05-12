@@ -92,7 +92,6 @@ body
                                             .modal-header
                                                 h3#editModalLabel.modal-title Edit Record 
                                             .modal-body
-                                                | #{data._id}
                                                 form(action='/users/edit/#{data._id}', method='POST', id="edit-record#{data._id}")
                                                     .form-group
                                                         label.col-form-label first_name:
