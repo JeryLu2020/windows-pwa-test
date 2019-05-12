@@ -84,10 +84,10 @@ body
                             td #{data.payment_card}
                             td #{data.updatedAt}
                             td
-                                button.btn.btn-primary(type='button', data-toggle='modal', data-target='#exampleModal', id='parent', value='#{data._id}', onclick='parent()')
+                                button.btn.btn-primary(type='button', data-toggle='modal', data-target="modal#{data._id}", value='#{data._id}', onclick='parent(this.value)')
                                     | #{data._id}
-                                #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true')
-                                    |  #{data._id}
+                                .modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true', id="modal#{data._id}")
+                                    | #{data._id}
                                     .modal-dialog
                                         .modal-content 
                                             .modal-header
@@ -102,16 +102,16 @@ body
                                                 button.btn.btn-primary(type='button', onclick="editsubmit()") Submit
                                 form(action="/users/delete/#{data._id}", method="POST")
                                     button.btn.btn-outline-info(type="submit") Delete
-                                script.
-                                    var parentId = document.getElementById('parent').value;
-                                    function parent(){
-                                        console.log(parentId);
-                                        console.log('button clicked');
-                                    }
+            script.
+                var parentId = document.getElementById('parent').value;
+                function parent(val){
+                    console.log(val);
+                    console.log('button clicked');
+                }
 
-                                    function editsubmit(){
-                                        document.getElementById('edit-record').submit();
-                                    }
+                function editsubmit(){
+                    document.getElementById('edit-record').submit();
+                }
 
 
 
