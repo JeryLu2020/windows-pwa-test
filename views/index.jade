@@ -21,3 +21,32 @@ block content
     a(href="/users")
       button.btn.btn-primary(type="button") Check all the users
   br
+
+  div
+    button.btn.btn-success(type='button', data-toggle='modal', data-target='#registerModal')
+      | Register
+    #registerModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='registerModalLabel', aria-hidden='true')
+      .modal-dialog.modal-dialog-centered(role='document')
+          .modal-content
+              .modal-header
+                  h3#registerModalLabel.modal-title Register
+              .modal-body
+                  form(action='/users/register', method='POST', id='register-record')
+                      .form-group
+                          label.col-form-label username:
+                              input.form-controlinput(type='text', name='username', placeholder='')
+                      .form-group
+                          label.col-form-label password:
+                              input.form-controlinput(type='text', name='password', placeholder='')
+                      .form-group
+                          label.col-form-label email:
+                              input.form-controlinput(type='text', name='email', placeholder='')
+              .modal-footer
+                  button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
+                  button.btn.btn-primary(type='button', onclick="document.getElementById('register-record').submit();") Submit
+
+    div
+      h1
+      //- h1 #{registerinfo.username}
+      //- h1 #{registerinfo.password}
+      //- h1 #{registerinfo.email}

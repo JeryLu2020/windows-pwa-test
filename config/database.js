@@ -33,6 +33,10 @@ const heroSchema = new Schema({
         payment_card: String,
         payment_card_id_number: String,
         payment_card_expiration_date: Date,
+
+        username: String,
+        password: String,
+        email: String,
     },
     { timestamps: true }
 );

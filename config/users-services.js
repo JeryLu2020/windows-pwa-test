@@ -97,3 +97,22 @@ exports.delete = (req, res) => {
         return res.status(500).send('error deleting record with Id' + req.params.Id)
     });
 };
+
+
+exports.userregister = (req, res) => {
+
+    const hero1 = new Hero({
+        username: req.body.username || 'Unknown username',
+        password: req.body.password || 'Unknown password',
+        email: req.body.email || 'Unknown email',
+    });
+
+    hero1.save()
+        .then(data=>{
+            console.log(data);
+            res.redirect('/');
+        })
+        .catch(err =>{
+            res.status(500).send("failed to create"+err);
+        })
+};

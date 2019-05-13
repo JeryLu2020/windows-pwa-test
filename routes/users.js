@@ -14,4 +14,7 @@ router.post('/edit/:Id', userServices.update);
 
 router.post('/delete/:Id', userServices.delete);
 
+//register
+router.post('/register', userServices.userregister);
+
 module.exports = router;
