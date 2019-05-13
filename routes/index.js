@@ -73,31 +73,4 @@ router.post('/postfunction', function (req, res) {
     }); 
 });
 
-//get mongodb data
-var functionurl2 = "https://func-js-2019.azurewebsites.net/api/HttpTriggerconnectMongoDB?code=4H0k4OblZOF4SKhCq4y3Ec3lKjrXT9ztSdhAN3tCEEJBWmyKlQdq/w==";
-var datas = '';
-router.get('/postfunctionmongodb', function (req, res) {
-    request({
-        url: functionurl2,
-        method: "GET",
-        json: true,
-        headers: {
-            "content-type": "application/json",
-        },
-        body: { }
-    }, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log("success");
-            datas = response.body.res;
-            console.log(datas);
-            
-            res.render('MongoData', { mongoData: datas });
-
-        } else if(error){
-            console.log("error: " + error);
-            res.send("failed to call function app" + error);
-        }
-    }); 
-});
-
 module.exports = router;
