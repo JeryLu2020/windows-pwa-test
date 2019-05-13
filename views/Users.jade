@@ -10,7 +10,6 @@ head
 body
     .container-fluid
         h1 MongoDB Data using Jade engine. Manage all the data here
-        
         div
             button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal')
                 | Add Record
@@ -67,7 +66,7 @@ body
                         th License_state
                         th Payment_card
                         th UpdatedAt
-                        th Operations
+                        //- th Operations
                 tbody
                     each data in usersData
                         tr
@@ -83,8 +82,9 @@ body
                             td #{data.driver_license_state}
                             td #{data.payment_card}
                             td #{data.updatedAt}
+                            //- 51561651
                             td
-                                button.btn.btn-primary(type='button', data-toggle='modal', data-target="#modal#{data._id}", value='#{data._id}')
+                                button.btn.btn-primary.btn-xs(type='button', data-toggle='modal', data-target="#modal#{data._id}", value='#{data._id}')
                                     | Edit
                                 .modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true', id="modal#{data._id}")
                                     .modal-dialog
@@ -118,9 +118,8 @@ body
                                                 button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
                                                 button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record#{data._id}').submit()") Submit
                                 form(action="/users/delete/#{data._id}", method="POST")
-                                    button.btn.btn-outline-info(type="submit") Delete
+                                    button.btn.btn-danger.btn-xs(type="submit") Delete
 
 
-
-//-   https://andwecode.com/create-popup-login-and-signup-form/  
+//- https://andwecode.com/create-popup-login-and-signup-form/  
 //- https://getbootstrap.com/docs/4.0/components/modal/#live-demo

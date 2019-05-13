@@ -16,11 +16,8 @@ block content
   p Welcome to #{title}
   div
     form(method='POST' action='/postfunction')
-      button.btn.btn-primary(type='submit' style='width: 300px; height: 30px; border-radius: 5px') Send request to Azure Function App
-    br
-    form(method='GET' action='/postfunctionmongodb')
-      button.btn.btn-primary(type='submit' style='width: 300px; height: 30px; border-radius: 5px') Get mongodb data from Function App
+      button.btn.btn-primary(type='submit') Send request to Azure Function App
     br
     a(href="/users")
-      button.btn.btn-primary(type="button" style='width: 150px; height: 30px; border-radius: 5px') go to users
+      button.btn.btn-primary(type="button") Check all the users
   br
