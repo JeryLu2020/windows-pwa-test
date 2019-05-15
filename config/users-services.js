@@ -19,7 +19,7 @@ exports.create = (req, res) => {
 
     hero.save()
         .then(data=>{
-            console.log(data);
+            // console.log(data);
             res.redirect('/users');
         })
         .catch(err =>{
@@ -75,7 +75,7 @@ exports.update = (req, res) => {
         if(!data){
             return res.status(404).send('record not found' + req.params.Id);
         }
-        console.log(data._id);
+        // console.log(data._id);
         console.log('update success');
         res.redirect('/users');
     })
@@ -109,18 +109,27 @@ exports.delete = (req, res) => {
 
 exports.userregister = (req, res) => {
 
-    const hero1 = new Hero({
-        username: req.body.username || 'Unknown username',
-        password: req.body.password || 'Unknown password',
-        email: req.body.email || 'Unknown email',
+    const hero = new Hero({
+        first_name: req.body.first_name || 'Unknown name',
+        middle_initial: req.body.middle_initial || 'N/A',
+        last_name: req.body.last_name || 'N/A',
+        street_address: req.body.street_address || 'N/A',
+        city_name: req.body.city_name || 'N/A',
+        payment_card: req.body.payment_card || 'N/A',
+        country_name: req.body.country_name || 'N/A',
+        day_of_birth: req.body.day_of_birth || '',
+        
+        username: req.body.username || 'Undefined',
+        password: req.body.password || '',
+        email: req.body.email || 'Undefined',
     });
 
-    hero1.save()
+    hero.save()
         .then(data=>{
-            console.log(data);
+            // console.log(data);
             res.redirect('/');
         })
         .catch(err =>{
-            res.status(500).send("failed to create"+err);
+            res.status(500).send("failed to register"+err);
         })
 };

@@ -20,7 +20,7 @@ block content
             .modal-header
               h3#addModalLabel.modal-title Register
             .modal-body
-              form(action='/users', method='POST', id='add-record')
+              form(action='/users/register', method='POST', id='register-record')
                 .form-group.row
                     label.col-sm-2.col-form-label username:
                     .col-sm-10
@@ -65,6 +65,6 @@ block content
                             option(value='Georgia') Georgia
             .modal-footer
               button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
-              button.btn.btn-primary(type='button', onclick="document.getElementById('add-record').submit();") Submit
+              button.btn.btn-primary(type='button', onclick="document.getElementById('register-record').submit();") Submit
   div
     h1

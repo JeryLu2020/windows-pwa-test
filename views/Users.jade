@@ -151,7 +151,7 @@ body
                                                     .form-group.row
                                                         label.col-sm-2.col-form-label country:
                                                         .col-sm-10
-                                                            select#inlineFormCustomSelect.custom-select.mr-sm-2(name='country_name', value='#{data.country_name}')
+                                                            select.custom-select.mr-sm-2(name='country_name', value='#{data.country_name}')
                                                                 option(selected='Alabama') Alabama
                                                                 option(value='California') California
                                                                 option(value='Texas') Texas
@@ -170,16 +170,6 @@ body
                 $('[data-toggle="popover"]').popover();
                 $('#example').DataTable();
             });
-
-    div
-        .form-group.row
-            label.col-sm-2.col-form-label(for='staticEmail') Email
-            .col-sm-10
-                input#staticEmail.form-control-plaintext(type='text', readonly='', value='email@example.com')
-        .form-group.row
-            label.col-sm-2.col-form-label(for='inputPassword') Password
-            .col-sm-10
-                input#inputPassword.form-control(type='password', placeholder='Password')
 
 
 //- https://andwecode.com/create-popup-login-and-signup-form/  
