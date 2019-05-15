@@ -11,6 +11,10 @@ exports.create = (req, res) => {
         payment_card: req.body.payment_card || 'N/A',
         country_name: req.body.country_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
+        
+        username: req.body.username || 'Undefined',
+        password: req.body.password || '',
+        email: req.body.email || 'Undefined',
     });
 
     hero.save()
@@ -62,6 +66,10 @@ exports.update = (req, res) => {
         payment_card: req.body.payment_card || 'N/A',
         country_name: req.body.country_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
+        
+        username: req.body.username || 'Undefined',
+        password: req.body.password || '',
+        email: req.body.email || 'Undefined',
     }, {new: true})
     .then(data => {
         if(!data){

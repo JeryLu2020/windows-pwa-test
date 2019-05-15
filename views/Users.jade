@@ -2,16 +2,25 @@ doctype html
 html
 head
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/dataTables.bootstrap4.min.css')
     script(src='/bootstrap/js/jquery-3.4.1.js')
     script(src='/bootstrap/js/jquery-3.3.1.slim.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/bootstrap/js/popper.min.js')
+    script(src='/bootstrap/js/bootstrap.bundle.min.js')
+    script(src='/bootstrap/js/jquery.dataTables.min.js')
+    script(src='/bootstrap/js/dataTables.bootstrap4.min.js')
 
 body
+    nav.nav.navbar-expand-lg.navbar-dark.bg-light(style="font-size:25px")
+        a.nav-link.active(style="font-weight:bold") EXPRESS
+        a.nav-link(href='/') Home
+        a.nav-link(href='/users') Users
+
     .container-fluid
-        h1 MongoDB Data using Jade engine. Manage all the data here
         div
-            button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal')
+            br
+            button.btn.btn-outline-success(type='button', data-toggle='modal', data-target='#addModal', sytle='float:right')
                 | Add Record
             #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addModalLabel', aria-hidden='true')
                 .modal-dialog.modal-dialog-centered(role='document')
@@ -21,18 +30,20 @@ body
                         .modal-body
                             form(action='/users', method='POST', id='add-record')
                                 .form-group
+                                    label.col-form-label username:
+                                        input.form-controlinput(type='text', name='username', placeholder='')
+                                    label.col-form-label password:
+                                        input.form-controlinput(type='text', name='password', placeholder='')
+                                    label.col-form-label email:
+                                        input.form-controlinput(type='text', name='email', placeholder='')
                                     label.col-form-label first_name:
                                         input.form-controlinput(type='text', name='first_name', placeholder='')
-                                .form-group
                                     label.col-form-label middle_initial:
                                         input.form-controlinput(type='text', name='middle_initial', placeholder='')
-                                .form-group
                                     label.col-form-label last_name:
                                         input.form-controlinput(type='text', name='last_name', placeholder='')
-                                .form-group
                                     label.col-form-label street_address:
                                         input.form-controlinput(type='text', name='street_address', placeholder='')
-                                .form-group
                                     label.col-form-label day_of_birth:
                                         input.form-controlinput(type='date', name='day_of_birth', placeholder='')
                                 .form-group
@@ -51,58 +62,61 @@ body
     .container-fluid
         div
             br
-            table.table.table-striped
+            //- table.table.table-striped
+            table#example.table.table-striped.table-bordered(style='width:100%')
                 thead
                     tr 
-                        th ID
                         th First_name
-                        th Middle_initial
-                        th Last_name
+                        //- th Middle_initial
+                        //- th Last_name
                         th Address
                         th City
                         th Country
-                        th Day_of_birth
                         th Driver_license
                         th License_state
                         th Payment_card
+                        th username
                         th UpdatedAt
-                        //- th Operations
+                        th Operations
                 tbody
                     each data in usersData
                         tr
-                            td #{data._id}
-                            td #{data.first_name}
-                            td #{data.middle_initial}
-                            td #{data.last_name}
+                            td 
+                                a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Full Name', data-content="first name: #{data.first_name} <br/> middle name: #{data.middle_initial} <br/> lat name: #{data.last_name}") #{data.first_name}
+                            //- td #{data.middle_initial}
+                            //- td #{data.last_name}
                             td #{data.street_address}
                             td #{data.city_name}
                             td #{data.country_name}
-                            td #{data.day_of_birth}
                             td #{data.driver_license_number}
                             td #{data.driver_license_state}
                             td #{data.payment_card}
+                            td 
+                                a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="username: #{data.username} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.username}
                             td #{data.updatedAt}
-                            //- 51561651
                             td
                                 button.btn.btn-primary.btn-xs(type='button', data-toggle='modal', data-target="#modal#{data._id}", value='#{data._id}')
                                     | Edit
                                 .modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true', id="modal#{data._id}")
-                                    .modal-dialog
+                                    .modal-dialog.modal-dialog-centered
                                         .modal-content 
                                             .modal-header
                                                 h3#editModalLabel.modal-title Edit Record 
                                             .modal-body
                                                 form(action='/users/edit/#{data._id}', method='POST', id="edit-record#{data._id}")
                                                     .form-group
+                                                        label.col-form-label username:
+                                                            input.form-controlinput(type='text', name='username', value='#{data.username}')
+                                                        label.col-form-label password:
+                                                            input.form-controlinput(type='text', name='password', value='#{data.password}')
+                                                        label.col-form-label email:
+                                                            input.form-controlinput(type='text', name='email', value='#{data.email}')
                                                         label.col-form-label first_name:
                                                             input.form-controlinput(type='text', name='first_name', value='#{data.first_name}')
-                                                    .form-group
                                                         label.col-form-label middle_initial:
                                                             input.form-controlinput(type='text', name='middle_initial', value='#{data.middle_initial}')
-                                                    .form-group
                                                         label.col-form-label last_name:
                                                             input.form-controlinput(type='text', name='last_name', value='#{data.last_name}')
-                                                    .form-group
                                                         label.col-form-label street_address:
                                                             input.form-controlinput(type='text', name='street_address', value='#{data.street_address}')
                                                     .form-group
@@ -119,7 +133,16 @@ body
                                                 button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record#{data._id}').submit()") Submit
                                 form(action="/users/delete/#{data._id}", method="POST")
                                     button.btn.btn-danger.btn-xs(type="submit") Delete
+            br
+    div
+        script.
+            $(document).ready(function(){
+                $('[data-toggle="popover"]').popover();
+                $('#example').DataTable();
+            });
+
 
 
 //- https://andwecode.com/create-popup-login-and-signup-form/  
 //- https://getbootstrap.com/docs/4.0/components/modal/#live-demo
+

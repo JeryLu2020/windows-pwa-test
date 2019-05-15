@@ -1,52 +1,54 @@
 ﻿extends layout
 
 head
-  style. 
-    button{
-      position: relative;
-      border: 0;
-      width: 11em;
-      margin: 1em;
-      padding: 10px 20px;
-      border-radius: 2px;
-    }
 
 block content
-  h1= title
-  p Welcome to #{title}
   div
-    form(method='POST' action='/postfunction')
-      button.btn.btn-primary(type='submit') Send request to Azure Function App
-    br
+    //- form(method='POST' action='/postfunction')
+    //-   button.btn.btn-primary(type='submit') Send request to Azure Function App
+    //- br
     a(href="/users")
       button.btn.btn-primary(type="button") Check all the users
   br
 
   div
-    button.btn.btn-success(type='button', data-toggle='modal', data-target='#registerModal')
-      | Register
-    #registerModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='registerModalLabel', aria-hidden='true')
-      .modal-dialog.modal-dialog-centered(role='document')
+      button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal')
+        | Register
+      #addModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addModalLabel', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered(role='document')
           .modal-content
-              .modal-header
-                  h3#registerModalLabel.modal-title Register
-              .modal-body
-                  form(action='/users/register', method='POST', id='register-record')
-                      .form-group
-                          label.col-form-label username:
-                              input.form-controlinput(type='text', name='username', placeholder='')
-                      .form-group
-                          label.col-form-label password:
-                              input.form-controlinput(type='text', name='password', placeholder='')
-                      .form-group
-                          label.col-form-label email:
-                              input.form-controlinput(type='text', name='email', placeholder='')
-              .modal-footer
-                  button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
-                  button.btn.btn-primary(type='button', onclick="document.getElementById('register-record').submit();") Submit
-
-    div
-      h1
-      //- h1 #{registerinfo.username}
-      //- h1 #{registerinfo.password}
-      //- h1 #{registerinfo.email}
+            .modal-header
+              h3#addModalLabel.modal-title Register
+            .modal-body
+              form(action='/users', method='POST', id='add-record')
+                .form-group
+                  label.col-form-label username:
+                    input.form-controlinput(type='text', name='username', placeholder='')
+                  label.col-form-label password:
+                    input.form-controlinput(type='text', name='password', placeholder='')
+                  label.col-form-label email:
+                    input.form-controlinput(type='text', name='email', placeholder='')
+                  label.col-form-label first_name:
+                    input.form-controlinput(type='text', name='first_name', placeholder='')
+                  label.col-form-label middle_initial:
+                    input.form-controlinput(type='text', name='middle_initial', placeholder='')
+                  label.col-form-label last_name:
+                    input.form-controlinput(type='text', name='last_name', placeholder='')
+                  label.col-form-label street_address:
+                    input.form-controlinput(type='text', name='street_address', placeholder='')
+                  label.col-form-label day_of_birth:
+                    input.form-controlinput(type='date', name='day_of_birth', placeholder='')
+                .form-group
+                  label.col-form-label country_name:
+                    select.custom-select.mr-sm-2(name='country_name')
+                      option(selected='Alabama') Alabama
+                      option(value='California') California
+                      option(value='Texas') Texas
+                      option(value='New York') New York
+                      option(value='Arizona') Arizona
+                      option(value='Georgia') Georgia
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
+              button.btn.btn-primary(type='button', onclick="document.getElementById('add-record').submit();") Submit
+  div
+    h1
