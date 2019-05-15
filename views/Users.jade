@@ -29,25 +29,41 @@ body
                             h3#addModalLabel.modal-title Add Record
                         .modal-body
                             form(action='/users', method='POST', id='add-record')
-                                .form-group
-                                    label.col-form-label username:
-                                        input.form-controlinput(type='text', name='username', placeholder='')
-                                    label.col-form-label password:
-                                        input.form-controlinput(type='text', name='password', placeholder='')
-                                    label.col-form-label email:
-                                        input.form-controlinput(type='text', name='email', placeholder='')
-                                    label.col-form-label first_name:
-                                        input.form-controlinput(type='text', name='first_name', placeholder='')
-                                    label.col-form-label middle_initial:
-                                        input.form-controlinput(type='text', name='middle_initial', placeholder='')
-                                    label.col-form-label last_name:
-                                        input.form-controlinput(type='text', name='last_name', placeholder='')
-                                    label.col-form-label street_address:
-                                        input.form-controlinput(type='text', name='street_address', placeholder='')
-                                    label.col-form-label day_of_birth:
-                                        input.form-controlinput(type='date', name='day_of_birth', placeholder='')
-                                .form-group
-                                    label.col-form-label first_name:
+                                .form-group.row
+                                    label.col-sm-2.col-form-label username:
+                                    .col-sm-10
+                                        input.form-control(type='text', name='username', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label password:
+                                    .col-sm-10
+                                        input.form-control(type='password', name='password', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label email:
+                                    .col-sm-10
+                                        input.form-control(type='text', name='email', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label first_name:
+                                    .col-sm-10
+                                        input.form-control(type='text', name='first_name', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label middle_initial:
+                                    .col-sm-10
+                                        input.form-control(type='text', name='middle_initial', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label last_name:
+                                    .col-sm-10
+                                        input.form-control(type='text', name='last_name', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label address:
+                                    .col-sm-10
+                                        input.form-control(type='text', name='street_address', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label birthday:
+                                    .col-sm-10
+                                        input.form-control(type='date', name='day_of_birth', placeholder='')
+                                .form-group.row
+                                    label.col-sm-2.col-form-label country:
+                                    .col-sm-10
                                         select.custom-select.mr-sm-2(name='country_name')
                                             option(selected='Alabama') Alabama
                                             option(value='California') California
@@ -104,23 +120,37 @@ body
                                                 h3#editModalLabel.modal-title Edit Record 
                                             .modal-body
                                                 form(action='/users/edit/#{data._id}', method='POST', id="edit-record#{data._id}")
-                                                    .form-group
-                                                        label.col-form-label username:
-                                                            input.form-controlinput(type='text', name='username', value='#{data.username}')
-                                                        label.col-form-label password:
-                                                            input.form-controlinput(type='text', name='password', value='#{data.password}')
-                                                        label.col-form-label email:
-                                                            input.form-controlinput(type='text', name='email', value='#{data.email}')
-                                                        label.col-form-label first_name:
-                                                            input.form-controlinput(type='text', name='first_name', value='#{data.first_name}')
-                                                        label.col-form-label middle_initial:
-                                                            input.form-controlinput(type='text', name='middle_initial', value='#{data.middle_initial}')
-                                                        label.col-form-label last_name:
-                                                            input.form-controlinput(type='text', name='last_name', value='#{data.last_name}')
-                                                        label.col-form-label street_address:
-                                                            input.form-controlinput(type='text', name='street_address', value='#{data.street_address}')
-                                                    .form-group
-                                                        label.col-form-label country_name:
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label username:
+                                                        .col-sm-10
+                                                            input.form-control(type='text', name='username', value='#{data.username}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label password:
+                                                        .col-sm-10
+                                                            input.form-control(type='password', name='password', value='#{data.password}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label email:
+                                                        .col-sm-10
+                                                            input.form-control(type='text', name='email', value='#{data.email}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label first_name:
+                                                        .col-sm-10
+                                                            input.form-control(type='text', name='first_name', value='#{data.first_name}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label middle_name:
+                                                        .col-sm-10
+                                                            input.form-control(type='text', name='middle_initial', value='#{data.middle_initial}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label last_name:
+                                                        .col-sm-10
+                                                            input.form-control(type='text', name='last_name', value='#{data.last_name}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label address:
+                                                        .col-sm-10
+                                                            input.form-control(type='text', name='street_address', value='#{data.street_address}')
+                                                    .form-group.row
+                                                        label.col-sm-2.col-form-label country:
+                                                        .col-sm-10
                                                             select#inlineFormCustomSelect.custom-select.mr-sm-2(name='country_name', value='#{data.country_name}')
                                                                 option(selected='Alabama') Alabama
                                                                 option(value='California') California
@@ -141,6 +171,15 @@ body
                 $('#example').DataTable();
             });
 
+    div
+        .form-group.row
+            label.col-sm-2.col-form-label(for='staticEmail') Email
+            .col-sm-10
+                input#staticEmail.form-control-plaintext(type='text', readonly='', value='email@example.com')
+        .form-group.row
+            label.col-sm-2.col-form-label(for='inputPassword') Password
+            .col-sm-10
+                input#inputPassword.form-control(type='password', placeholder='Password')
 
 
 //- https://andwecode.com/create-popup-login-and-signup-form/  

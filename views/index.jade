@@ -21,32 +21,48 @@ block content
               h3#addModalLabel.modal-title Register
             .modal-body
               form(action='/users', method='POST', id='add-record')
-                .form-group
-                  label.col-form-label username:
-                    input.form-controlinput(type='text', name='username', placeholder='')
-                  label.col-form-label password:
-                    input.form-controlinput(type='text', name='password', placeholder='')
-                  label.col-form-label email:
-                    input.form-controlinput(type='text', name='email', placeholder='')
-                  label.col-form-label first_name:
-                    input.form-controlinput(type='text', name='first_name', placeholder='')
-                  label.col-form-label middle_initial:
-                    input.form-controlinput(type='text', name='middle_initial', placeholder='')
-                  label.col-form-label last_name:
-                    input.form-controlinput(type='text', name='last_name', placeholder='')
-                  label.col-form-label street_address:
-                    input.form-controlinput(type='text', name='street_address', placeholder='')
-                  label.col-form-label day_of_birth:
-                    input.form-controlinput(type='date', name='day_of_birth', placeholder='')
-                .form-group
-                  label.col-form-label country_name:
-                    select.custom-select.mr-sm-2(name='country_name')
-                      option(selected='Alabama') Alabama
-                      option(value='California') California
-                      option(value='Texas') Texas
-                      option(value='New York') New York
-                      option(value='Arizona') Arizona
-                      option(value='Georgia') Georgia
+                .form-group.row
+                    label.col-sm-2.col-form-label username:
+                    .col-sm-10
+                        input.form-control(type='text', name='username', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label password:
+                    .col-sm-10
+                        input.form-control(type='password', name='password', placeholder='password')
+                .form-group.row
+                    label.col-sm-2.col-form-label email:
+                    .col-sm-10
+                        input.form-control(type='text', name='email', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label first_name:
+                    .col-sm-10
+                        input.form-control(type='text', name='first_name', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label middle_initial:
+                    .col-sm-10
+                        input.form-control(type='text', name='middle_initial', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label last_name:
+                    .col-sm-10
+                        input.form-control(type='text', name='last_name', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label address:
+                    .col-sm-10
+                        input.form-control(type='text', name='street_address', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label birthday:
+                    .col-sm-10
+                        input.form-control(type='date', name='day_of_birth', placeholder='')
+                .form-group.row
+                    label.col-sm-2.col-form-label country:
+                    .col-sm-10
+                        select.custom-select.mr-sm-2(name='country_name')
+                            option(selected='Alabama') Alabama
+                            option(value='California') California
+                            option(value='Texas') Texas
+                            option(value='New York') New York
+                            option(value='Arizona') Arizona
+                            option(value='Georgia') Georgia
             .modal-footer
               button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
               button.btn.btn-primary(type='button', onclick="document.getElementById('add-record').submit();") Submit
