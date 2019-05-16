@@ -1,22 +1,8 @@
-doctype html
-html
+extends layout
+
 head
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/bootstrap/css/dataTables.bootstrap4.min.css')
-    script(src='/bootstrap/js/jquery-3.4.1.js')
-    script(src='/bootstrap/js/jquery-3.3.1.slim.min.js')
-    script(src='/bootstrap/js/bootstrap.min.js')
-    script(src='/bootstrap/js/popper.min.js')
-    script(src='/bootstrap/js/bootstrap.bundle.min.js')
-    script(src='/bootstrap/js/jquery.dataTables.min.js')
-    script(src='/bootstrap/js/dataTables.bootstrap4.min.js')
 
-body
-    nav.nav.navbar-expand-lg.navbar-dark.bg-light(style="font-size:25px")
-        a.nav-link.active(style="font-weight:bold") EXPRESS
-        a.nav-link(href='/') Home
-        a.nav-link(href='/users') Users
-
+block content
     .container-fluid
         div
             br
@@ -155,7 +141,7 @@ body
                             td
                                 .btn-toolbar.mb-3(role='toolbar', aria-label='Toolbar with button groups')
                                     .btn-group.mr-2(role='group', aria-label='First group')
-                                        button.btn.btn-warning.btn-sm(type='button', data-toggle='modal', data-target="#modal#{data._id}", value='#{data._id}')
+                                        button.btn.btn-warning.btn-sm.rounded(type='button', data-toggle='modal', data-target="#modal#{data._id}", value='#{data._id}')
                                             | Edit
                                         .modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true', id="modal#{data._id}")
                                             .modal-dialog.modal-dialog-centered
@@ -207,7 +193,7 @@ body
                                                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
                                                         button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record#{data._id}').submit()") Submit
                                     .btn-group.mr-2(role='group', aria-label='First group')
-                                        button.btn.btn-danger.btn-sm(type='button', data-toggle='modal', data-target="#deletemodal#{data._id}", value='#{data._id}')
+                                        button.btn.btn-danger.btn-sm.rounded(type='button', data-toggle='modal', data-target="#deletemodal#{data._id}", value='#{data._id}')
                                             | delete
                                         .modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteModalLabel', aria-hidden='true', id="deletemodal#{data._id}")
                                             .modal-dialog.modal-dialog-centered
@@ -219,15 +205,11 @@ body
                                                             | Are you sure you want to delete?
                                                     .modal-footer
                                                         form(action="/users/delete/#{data._id}", method="POST")
-                                                            button.btn.btn-danger.btn-sm(type="submit") Delete
+                                                            button.btn.btn-danger.btn-sm.rounded(type="submit") Delete
     div
         script.
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
                 $('#example').DataTable();
             });
-
-
-//- https://andwecode.com/create-popup-login-and-signup-form/  
-//- https://getbootstrap.com/docs/4.0/components/modal/#live-demo
 

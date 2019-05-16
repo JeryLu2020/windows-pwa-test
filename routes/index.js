@@ -5,7 +5,7 @@ var request = require('request');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express Sample App' });
 });
 
 router.get('/offline.html', function (req, res) {
