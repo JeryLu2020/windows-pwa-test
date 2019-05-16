@@ -9,7 +9,7 @@ exports.create = (req, res) => {
         street_address: req.body.street_address || 'N/A',
         city_name: req.body.city_name || 'N/A',
         payment_card: req.body.payment_card || 'N/A',
-        country_name: req.body.country_name || 'N/A',
+        state_name: req.body.state_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
         
         username: req.body.username || 'Undefined',
@@ -64,7 +64,7 @@ exports.update = (req, res) => {
         street_address: req.body.street_address || 'N/A',
         city_name: req.body.city_name || 'N/A',
         payment_card: req.body.payment_card || 'N/A',
-        country_name: req.body.country_name || 'N/A',
+        state_name: req.body.state_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
         
         username: req.body.username || 'Undefined',
@@ -116,7 +116,7 @@ exports.userregister = (req, res) => {
         street_address: req.body.street_address || 'N/A',
         city_name: req.body.city_name || 'N/A',
         payment_card: req.body.payment_card || 'N/A',
-        country_name: req.body.country_name || 'N/A',
+        state_name: req.body.state_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
         
         username: req.body.username || 'Undefined',

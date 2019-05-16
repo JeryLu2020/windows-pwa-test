@@ -62,9 +62,9 @@ body
                                     .col-sm-10
                                         input.form-control(type='date', name='day_of_birth', placeholder='')
                                 .form-group.row
-                                    label.col-sm-2.col-form-label country:
+                                    label.col-sm-2.col-form-label state:
                                     .col-sm-10
-                                        select.custom-select.mr-sm-2(name='country_name')
+                                        select.custom-select.mr-sm-2(name='state_name')
                                             option(selected='Alabama') Alabama
                                             option(value='California') California
                                             option(value='Texas') Texas
@@ -83,13 +83,13 @@ body
                 thead
                     tr 
                         th First_name
-                        //- th Middle_initial
-                        //- th Last_name
+                        th Middle_initial
+                        th Last_name
                         th Address
-                        th City
-                        th Country
-                        th Driver_license
-                        th License_state
+                        //- th City
+                        th State
+                        //- th Driver_license
+                        //- th License_state
                         th Payment_card
                         th username
                         th UpdatedAt
@@ -97,15 +97,15 @@ body
                 tbody
                     each data in usersData
                         tr
-                            td 
-                                a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Full Name', data-content="first name: #{data.first_name} <br/> middle name: #{data.middle_initial} <br/> lat name: #{data.last_name}") #{data.first_name}
-                            //- td #{data.middle_initial}
-                            //- td #{data.last_name}
+                            td #{data.first_name}
+                                //- a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Full Name', data-content="first name: #{data.first_name} <br/> middle name: #{data.middle_initial} <br/> lat name: #{data.last_name}") #{data.first_name}
+                            td #{data.middle_initial}
+                            td #{data.last_name}
                             td #{data.street_address}
-                            td #{data.city_name}
-                            td #{data.country_name}
-                            td #{data.driver_license_number}
-                            td #{data.driver_license_state}
+                            //- td #{data.city_name}
+                            td #{data.state_name}
+                            //- td #{data.driver_license_number}
+                            //- td #{data.driver_license_state}
                             td #{data.payment_card}
                             td 
                                 a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="username: #{data.username} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.username}
@@ -149,10 +149,11 @@ body
                                                         .col-sm-10
                                                             input.form-control(type='text', name='street_address', value='#{data.street_address}')
                                                     .form-group.row
-                                                        label.col-sm-2.col-form-label country:
+                                                        label.col-sm-2.col-form-label state:
                                                         .col-sm-10
-                                                            select.custom-select.mr-sm-2(name='country_name', value='#{data.country_name}')
-                                                                option(selected='Alabama') Alabama
+                                                            select.custom-select.mr-sm-2(name='state_name', value='#{data.state_name}') #{data.state_name}
+                                                                option(value='') #{data.state_name}
+                                                                option(value='Alabama') Alabama
                                                                 option(value='California') California
                                                                 option(value='Texas') Texas
                                                                 option(value='New York') New York
