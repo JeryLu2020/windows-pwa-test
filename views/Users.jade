@@ -191,7 +191,7 @@ block content
                                                                         option(value='Georgia') Georgia
                                                     .modal-footer
                                                         button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
-                                                        button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record#{data._id}').submit()") Submit
+                                                        button.btn.btn-primary(type='button', onclick="document.getElementById('edit-record#{data._id}').submit()") Save Changes
                                     .btn-group.mr-2(role='group', aria-label='First group')
                                         button.btn.btn-danger.btn-sm.rounded(type='button', data-toggle='modal', data-target="#deletemodal#{data._id}", value='#{data._id}')
                                             | delete
@@ -204,8 +204,9 @@ block content
                                                         .alert.alert-danger(role='alert')
                                                             | Are you sure you want to delete?
                                                     .modal-footer
+                                                        button.btn.btn-secondary.btn-sm(type='button', data-dismiss='modal') Cancle
                                                         form(action="/users/delete/#{data._id}", method="POST")
-                                                            button.btn.btn-danger.btn-sm.rounded(type="submit") Delete
+                                                            button.btn.btn-danger.btn-sm(type="submit") Delete
     div
         script.
             $(document).ready(function(){
