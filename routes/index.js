@@ -1,11 +1,30 @@
 ﻿var express = require('express');
 var router = express.Router();
 var webpush = require('web-push');
-var request = require('request');
+var Hero = require('../config/database');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index', { title: 'Express Sample App' });
+    if(req.session.userId){
+        Hero.findById(req.session.userId)
+            .then(data=>{
+                if(!data){
+                    return res.statue(404).send('failed to GET home page1');
+                }
+                console.log('findOne success');
+                return res.render('index', { layout: 'layout', title: 'VIP', userprofiler : data.username});
+            })
+            .catch(err=>{
+                if(err.kind === 'ObjectId'){
+                    console.log(req.session.userId);
+                    return res.status(404).send('failed to GET home page2' + req.session.userId);
+                }
+                return res.status(500).send('error finding with Id')
+            });
+    }
+    else {
+        res.render('index', { title: 'Express Sample App' , userprofiler: req.session.userId});
+    }
 });
 
 router.get('/offline.html', function (req, res) {

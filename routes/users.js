@@ -8,16 +8,19 @@ router.post('/', userServices.create);
 
 router.get('/', userServices.findAll);
 
-router.get('/:Id', userServices.findOne);
+// router.get('/:Id', userServices.findOne);
 
 router.post('/edit/:Id', userServices.update);
 
 router.post('/delete/:Id', userServices.delete);
 
-//register
+// register
 router.post('/register', userServices.userregister);
 
-//login
+// login
 router.post('/login', userServices.userlogin);
+
+// logout
+router.get('/logout', userServices.userlogout);
 
 module.exports = router;

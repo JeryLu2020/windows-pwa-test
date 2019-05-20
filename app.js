@@ -23,15 +23,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-
 // use session to store the user info
 app.use(session({
-    secret: 'work hard',
-    resave: true,
-    saveUninitialized: false
+    secret: 'work hard', //session key, coul dbe any string
+    resave: true, //force to store the session into session store
+    saveUninitialized: false, //store undefined session into storage
+    cookie : {
+        maxAge : 1000 * 60 * 10, // 设置 session 的有效时间，单位毫秒
+    },
 }))
+
+app.use('/', routes);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

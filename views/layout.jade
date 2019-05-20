@@ -93,7 +93,7 @@ body
                   .modal-header
                     h3#loginModalLabel.modal-title Login In
                   .modal-body
-                    form(action='/users/login', method='POST', id='login-record')
+                    form(action='/users/login/', method='POST', id='login-record')
                       .form-group.row
                           label.col-sm-3.col-form-label username:
                           .col-sm-9
@@ -109,7 +109,8 @@ body
                   .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancle
                     button.btn.btn-primary(type='button', onclick="document.getElementById('login-record').submit();") Login
-  
+            form(action="/users/logout", method="GET")
+                button.btn.btn-primary.btn-sm(type="submit") LogOut
   .container-fluid
     block content
     

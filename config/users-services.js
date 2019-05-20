@@ -19,7 +19,6 @@ exports.create = (req, res) => {
 
     hero.save()
         .then(data=>{
-            // console.log(data);
             res.redirect('/users');
         })
         .catch(err =>{
@@ -28,33 +27,40 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Hero.find()
-        .then(data =>{
-            // res.send(data);
-            console.log('findAll success');
-            res.render('Users', { layout: 'layout', usersData: data});
-        })
-        .catch(err=>{
-            res.status(500).send('failed to findall' + err);
-        })
+    if(req.session.userId == "administrator"){
+        Hero.find()
+            .then(data =>{
+                // res.send(data);
+                console.log('findAll success');
+                return res.render('Users', { layout: 'layout', usersData: data});
+            })
+            .catch(err=>{
+                return res.status(500).send('failed to findall' + err);
+            })
+    } else if(req.session.userId) {
+        return res.render('error', { errmsg: "Please Login As Admintrator"});
+    } else {
+        return res.render('error', { errmsg: "Please Login First"});
+    }
 };
 
-exports.findOne = (req, res) => {
-    Hero.findById(req.params.Id)
-        .then(data=>{
-            if(!data){
-                return res.statue(404).send('record not found' + req.params.Id);
-            }
-            console.log('findOne success');
-            res.send(data);
-        })
-        .catch(err=>{
-            if(err.kind === 'ObjectId'){
-                return res.status(404).send('record not found' + req.params.Id);
-            }
-            return res.status(500).send('error updating with Id' + req.params.Id)
-        });
-};
+// exports.findOne = (req, res) => {
+//     Hero.findById(req.session.userId)
+//         .then(data=>{
+//             if(!data){
+//                 return res.statue(404).send('record not found' + req.params.Id);
+//             }
+//             console.log('findOne success');
+//             // res.send('<h2>Your name: </h2>' + data.username + '<h2>Your password: </h2>' + data.password);
+//             res.render('index', { layout: 'layout', userprofiler : data.username});
+//         })
+//         .catch(err=>{
+//             if(err.kind === 'ObjectId'){
+//                 return res.status(404).send('record not found' + req.params.Id);
+//             }
+//             return res.status(500).send('error findone with Id' + req.params.Id)
+//         });
+// };
 
 exports.update = (req, res) => {
     Hero.findByIdAndUpdate(req.params.Id, {
@@ -77,7 +83,7 @@ exports.update = (req, res) => {
         }
         // console.log(data._id);
         console.log('update success');
-        res.redirect('/users');
+        return res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId'){
@@ -95,7 +101,7 @@ exports.delete = (req, res) => {
             return res.status(404).send('record not found' + req.params.Id);
         }
         console.log('delete success');
-        res.redirect('/users');
+        return res.redirect('/users');
     })
     .catch(err=>{
         if(err.kind === 'ObjectId' || err.name === 'NotFound'){
@@ -126,35 +132,55 @@ exports.userregister = (req, res) => {
 
     hero.save()
         .then(data=>{
-            // console.log(data);
-            res.redirect('/');
+            // console.log("data._id>>>" + data._id);
+            return res.redirect('/');
         })
         .catch(err =>{
-            res.status(500).send("failed to register"+err);
+            return res.status(500).send("failed to register"+err);
         })
 };
-
 
 exports.userlogin = (req, res) => {
 
     let loginname = req.body.username;
     let loginpassword = req.body.password;
 
-    Hero.find({ username: loginname, password: loginpassword})
-        .then(data=>{
-            if(!data){
-                res.statue(404).send('User not found' + req.params.Id);
-                res.redirect('/');
-            }
-            console.log('login success' + data);
-            
-            res.redirect('/');
-
-        })
-        .catch(err=>{
-            if(err.kind === 'ObjectId'){
-                return res.status(404).send('User not found' + req.params.Id);
-            }
-            return res.status(500).send('error finding with Id' + req.params.Id)
-        });
+    if(loginname=="admin" && loginpassword=="admin"){
+        req.session.userId = "administrator";
+        return res.redirect('/users');
+    } else {
+        Hero.findOne({ username: loginname, password: loginpassword})
+            .then(data=>{
+                if(!data){
+                    res.statue(404).send('User not found' + req.params.Id);
+                }
+                console.log('login success' + data._id);
+                // let userProfiler = JSON.parse(JSON.stringify(data));
+                // console.log("jsonobj:" + userProfiler[0]._id);
+                req.session.userId = data._id;
+                return res.redirect('/');
+            })
+            .catch(err=>{
+                if(err.kind === 'ObjectId'){
+                    return res.status(404).send('User not found' + req.params.Id);
+                }
+                return res.status(500).send('failed to login' + req.params.Id)
+            });
+    }
 }
+
+exports.userlogout = (req, res) => {
+    if (req.session) {
+      // delete session object
+      req.session.destroy(function (err) {
+        if (err) {
+          return next(err);
+        } else {
+          return res.redirect('/');
+        }
+      });
+    }
+    else{
+        return res.redirect('/');
+    }
+};
