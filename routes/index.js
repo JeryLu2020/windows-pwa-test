@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
             .catch(err=>{
                 if(err.kind === 'ObjectId'){
                     console.log(req.session.userId);
-                    return res.status(404).send('failed to GET home page2' + req.session.userId);
+                    return res.render('error', { errmsg: err });
                 }
                 return res.status(500).send('error finding with Id')
             });
