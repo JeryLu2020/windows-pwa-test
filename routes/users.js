@@ -17,4 +17,7 @@ router.post('/delete/:Id', userServices.delete);
 //register
 router.post('/register', userServices.userregister);
 
+//login
+router.post('/login', userServices.userlogin);
+
 module.exports = router;

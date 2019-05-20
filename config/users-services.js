@@ -41,19 +41,19 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
     Hero.findById(req.params.Id)
-    .then(data=>{
-        if(!data){
-            return res.statue(404).send('record not found' + req.params.Id);
-        }
-        console.log('findOne success');
-        res.send(data);
-    })
-    .catch(err=>{
-        if(err.kind === 'ObjectId'){
-            return res.status(404).send('record not found' + req.params.Id);
-        }
-        return res.status(500).send('error updating with Id' + req.params.Id)
-    });
+        .then(data=>{
+            if(!data){
+                return res.statue(404).send('record not found' + req.params.Id);
+            }
+            console.log('findOne success');
+            res.send(data);
+        })
+        .catch(err=>{
+            if(err.kind === 'ObjectId'){
+                return res.status(404).send('record not found' + req.params.Id);
+            }
+            return res.status(500).send('error updating with Id' + req.params.Id)
+        });
 };
 
 exports.update = (req, res) => {
@@ -133,3 +133,28 @@ exports.userregister = (req, res) => {
             res.status(500).send("failed to register"+err);
         })
 };
+
+
+exports.userlogin = (req, res) => {
+
+    let loginname = req.body.username;
+    let loginpassword = req.body.password;
+
+    Hero.find({ username: loginname, password: loginpassword})
+        .then(data=>{
+            if(!data){
+                res.statue(404).send('User not found' + req.params.Id);
+                res.redirect('/');
+            }
+            console.log('login success' + data);
+            
+            res.redirect('/');
+
+        })
+        .catch(err=>{
+            if(err.kind === 'ObjectId'){
+                return res.status(404).send('User not found' + req.params.Id);
+            }
+            return res.status(500).send('error finding with Id' + req.params.Id)
+        });
+}
