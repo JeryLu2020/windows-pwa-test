@@ -22,20 +22,19 @@ exports.create = (req, res) => {
             res.redirect('/users');
         })
         .catch(err =>{
-            res.status(500).send("failed to create"+err);
+            return res.render('error', { errmsg: err });
         })
 };
 
 exports.findAll = (req, res) => {
-    if(req.session.userId == "administrator"){
+    if(req.session.userId == "5ce21b12ba0f0921d45659b4"){
         Hero.find()
             .then(data =>{
-                // res.send(data);
                 console.log('findAll success');
                 return res.render('Users', { layout: 'layout', usersData: data});
             })
             .catch(err=>{
-                return res.status(500).send('failed to findall' + err);
+                return res.render('error', { errmsg: err });
             })
     } else if(req.session.userId) {
         return res.render('error', { errmsg: "Please Login As Admintrator"});
@@ -79,7 +78,7 @@ exports.update = (req, res) => {
     }, {new: true})
     .then(data => {
         if(!data){
-            return res.status(404).send('record not found' + req.params.Id);
+            return res.render('error', { errmsg: err });
         }
         // console.log(data._id);
         console.log('update success');
@@ -88,9 +87,9 @@ exports.update = (req, res) => {
     .catch(err=>{
         if(err.kind === 'ObjectId'){
             console.log('record not found' + req.params.Id);
-            return res.status(404).send('record not found' + req.params.Id);
+            return res.render('error', { errmsg: err });
         }
-        return res.status(500).send('error updating record with Id' + req.params.Id)
+        return res.render('error', { errmsg: err });
     });
 };
 
@@ -98,7 +97,7 @@ exports.delete = (req, res) => {
     Hero.findByIdAndRemove(req.params.Id)
     .then(data=>{
         if(!data){
-            return res.status(404).send('record not found' + req.params.Id);
+            return res.render('error', { errmsg: err });
         }
         console.log('delete success');
         return res.redirect('/users');
@@ -106,9 +105,9 @@ exports.delete = (req, res) => {
     .catch(err=>{
         if(err.kind === 'ObjectId' || err.name === 'NotFound'){
             console.log('record not found' + req.params.Id);
-            return res.status(404).send('record not found' + req.params.Id);
+            return res.render('error', { errmsg: err });
         }
-        return res.status(500).send('error deleting record with Id' + req.params.Id)
+        return res.render('error', { errmsg: err });
     });
 };
 
@@ -136,7 +135,7 @@ exports.userregister = (req, res) => {
             return res.redirect('/');
         })
         .catch(err =>{
-            return res.status(500).send("failed to register"+err);
+            return res.render('error', { errmsg: err });
         })
 };
 
@@ -146,13 +145,25 @@ exports.userlogin = (req, res) => {
     let loginpassword = req.body.password;
 
     if(loginname=="admin" && loginpassword=="admin"){
-        req.session.userId = "administrator";
-        return res.redirect('/users');
+        Hero.findOne({ username: "admin", password: "admin"})
+            .then(data=>{
+                if(!data){
+                    return res.render('error', { errmsg: err });
+                }
+                req.session.userId = data._id;
+                return res.redirect('/users');
+            })
+            .catch(err=>{
+                if(err.kind === 'ObjectId'){
+                    return res.render('error', { errmsg: err });
+                }
+                return res.render('error', { errmsg: err });
+            });
     } else {
         Hero.findOne({ username: loginname, password: loginpassword})
             .then(data=>{
                 if(!data){
-                    res.statue(404).send('User not found' + req.params.Id);
+                    return res.render('error', { errmsg: err });
                 }
                 console.log('login success' + data._id);
                 // let userProfiler = JSON.parse(JSON.stringify(data));
@@ -162,9 +173,9 @@ exports.userlogin = (req, res) => {
             })
             .catch(err=>{
                 if(err.kind === 'ObjectId'){
-                    return res.status(404).send('User not found' + req.params.Id);
+                    return res.render('error', { errmsg: err });
                 }
-                return res.status(500).send('failed to login' + req.params.Id)
+                return res.render('error', { errmsg: err });
             });
     }
 }
@@ -174,7 +185,7 @@ exports.userlogout = (req, res) => {
       // delete session object
       req.session.destroy(function (err) {
         if (err) {
-          return next(err);
+            return res.render('error', { errmsg: err });
         } else {
           return res.redirect('/');
         }

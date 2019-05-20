@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
         Hero.findById(req.session.userId)
             .then(data=>{
                 if(!data){
-                    return res.statue(404).send('failed to GET home page1');
+                    return res.render('error', { errmsg: err });
                 }
                 console.log('findOne success');
                 return res.render('index', { layout: 'layout', title: 'VIP', userprofiler : data.username});
@@ -19,7 +19,7 @@ router.get('/', function (req, res) {
                     console.log(req.session.userId);
                     return res.render('error', { errmsg: err });
                 }
-                return res.status(500).send('error finding with Id')
+                return res.render('error', { errmsg: err });
             });
     }
     else {
