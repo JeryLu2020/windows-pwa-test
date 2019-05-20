@@ -58,13 +58,13 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
     Hero.findByIdAndUpdate(req.params.Id, {
+        state_name: req.body.state_name || 'N/A',
         first_name: req.body.first_name || 'Unknown name',
         middle_initial: req.body.middle_initial || 'N/A',
         last_name: req.body.last_name || 'N/A',
         street_address: req.body.street_address || 'N/A',
         city_name: req.body.city_name || 'N/A',
         payment_card: req.body.payment_card || 'N/A',
-        state_name: req.body.state_name || 'N/A',
         day_of_birth: req.body.day_of_birth || '',
         
         username: req.body.username || 'Undefined',
