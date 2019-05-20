@@ -36,10 +36,8 @@ exports.findAll = (req, res) => {
             .catch(err=>{
                 return res.render('error', { errmsg: err });
             })
-    } else if(req.session.userId) {
-        return res.render('error', { errmsg: "Please Login As Admintrator"});
     } else {
-        return res.render('error', { errmsg: "Please Login First"});
+        return res.render('error', { errmsg: "Please Login As Admintrator"});
     }
 };
 
