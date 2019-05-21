@@ -41,24 +41,6 @@ exports.findAll = (req, res) => {
     }
 };
 
-// exports.findOne = (req, res) => {
-//     Hero.findById(req.session.userId)
-//         .then(data=>{
-//             if(!data){
-//                 return res.statue(404).send('record not found' + req.params.Id);
-//             }
-//             console.log('findOne success');
-//             // res.send('<h2>Your name: </h2>' + data.username + '<h2>Your password: </h2>' + data.password);
-//             res.render('index', { layout: 'layout', userprofiler : data.username});
-//         })
-//         .catch(err=>{
-//             if(err.kind === 'ObjectId'){
-//                 return res.status(404).send('record not found' + req.params.Id);
-//             }
-//             return res.status(500).send('error findone with Id' + req.params.Id)
-//         });
-// };
-
 exports.update = (req, res) => {
     Hero.findByIdAndUpdate(req.params.Id, {
         state_name: req.body.state_name || 'N/A',
@@ -158,23 +140,7 @@ exports.userlogin = (req, res) => {
                 return res.render('error', { errmsg: err });
             });
     } else {
-        Hero.findOne({ username: loginname, password: loginpassword})
-            .then(data=>{
-                if(!data){
-                    return res.render('error', { errmsg: err });
-                }
-                console.log('login success' + data._id);
-                // let userProfiler = JSON.parse(JSON.stringify(data));
-                // console.log("jsonobj:" + userProfiler[0]._id);
-                req.session.userId = data._id;
-                return res.redirect('/');
-            })
-            .catch(err=>{
-                if(err.kind === 'ObjectId'){
-                    return res.render('error', { errmsg: err });
-                }
-                return res.render('error', { errmsg: err });
-            });
+        return res.render('error', { errmsg: "Sorry, this site is for admintrastor only" });
     }
 }
 

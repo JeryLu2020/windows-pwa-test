@@ -51,7 +51,7 @@ block content
                                     label.col-sm-3.col-form-label state:
                                     .col-sm-9
                                         select.custom-select.mr-sm-2(name='state_name')
-                                            option(selected='Alabama') Alabama
+                                            option(selected='selected') Alabama
                                             option(value='California') California
                                             option(value='Texas') Texas
                                             option(value='New York') New York
@@ -234,43 +234,10 @@ block content
                                                         button.btn.btn-secondary.btn-sm(type='button', data-dismiss='modal') Cancle
                                                         form(action="/users/delete/#{data._id}", method="POST")
                                                             button.btn.btn-danger.btn-sm(type="submit") Delete
-                tfoot
-                    tr
-                        th First_name
-                        th Middle_initial
-                        th Last_name
-                        th Street_address
-                        th State_name
-                        th Payment_card
-                        th username
-                        th UpdatedAt
-                        th 
-    
     div
         script.
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
-                $('#example').DataTable( {
-                    initComplete: function () {
-                        this.api().columns().every( function () {
-                            var column = this;
-                            var select = $('<select><option value=""></option></select>')
-                                .appendTo( $(column.footer()).empty() )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-            
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
-            
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
-                } );
+                $('#example').DataTable();
             });
 
