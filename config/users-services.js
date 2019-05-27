@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    if(req.session.userId == "5ce21b12ba0f0921d45659b4"){
+    if(req.session.userId == "5cebeff66d85423bd889f6d2"){
         Hero.find()
             .then(data =>{
                 console.log('findAll success');
