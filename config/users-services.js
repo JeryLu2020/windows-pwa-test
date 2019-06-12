@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    if(req.session.userId == "5cebeff66d85423bd889f6d2"){
+    if(req.session.userId == "5d01269e9ba9df03a8b2ddaa"){
         Hero.find()
             .then(data =>{
                 console.log('findAll success');
@@ -124,8 +124,8 @@ exports.userlogin = (req, res) => {
     let loginname = req.body.username;
     let loginpassword = req.body.password;
 
-    if(loginname=="admin" && loginpassword=="admin"){
-        Hero.findOne({ username: "admin", password: "admin"})
+    if(loginname=="admin" && loginpassword=="Admin123"){
+        Hero.findOne({ username: "admin", password: "Admin123"})
             .then(data=>{
                 if(!data){
                     return res.render('error', { errmsg: err });
