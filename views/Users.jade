@@ -73,7 +73,7 @@ block content
                         th Street_address
                         th State_name
                         th Payment_card
-                        th username
+                        th Email
                         th UpdatedAt
                         th Operations
                 tbody
@@ -129,7 +129,7 @@ block content
                             td #{data.state_name}
                             td #{data.payment_card}
                             td 
-                                a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="username: #{data.username} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.username}
+                                a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="emailValid: #{data.emailValid} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.email}
                             td #{data.updatedAt}
                             td
                                 .btn-toolbar.mb-3(role='toolbar', aria-label='Toolbar with button groups')

@@ -29,7 +29,7 @@ app.use(session({
     resave: true, //force to store the session into session store
     saveUninitialized: false, //store undefined session into storage
     cookie : {
-        maxAge : 1000 * 60 * 10, // 设置 session 的有效时间，单位毫秒
+        maxAge : 1000 * 60 * 30, // 设置 session 的有效时间，单位毫秒
     },
 }))
 

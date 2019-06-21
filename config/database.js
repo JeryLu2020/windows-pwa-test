@@ -37,13 +37,20 @@ const heroSchema = new Schema({
 
         username: {
             type: String,
-            required: true,  
+            // required: true,
         },
         password: {
             type: String,
             required: true,  
         },
-        email: String,
+        email: {
+            type: String,
+            required: true,
+        },
+        emailValid: {
+            type: Boolean,
+            default: false
+        },
     },
     { timestamps: true }
 );
