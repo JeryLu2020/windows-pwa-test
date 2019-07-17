@@ -1,7 +1,8 @@
 extends layout
 
 head
-
+    script(type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer)
+    
 block content
     .container-fluid
         div
@@ -125,7 +126,8 @@ block content
                                                 button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
                             td #{data.middle_initial}
                             td #{data.last_name}
-                            td #{data.street_address}
+                            //- td #{data.street_address}
+                            td <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="popover" title="#{data.street_address}" data-html="true"  data-content="<b>Bing Map</b><div > map </div>">show location</button>
                             td #{data.state_name}
                             td #{data.payment_card}
                             td 
@@ -239,5 +241,24 @@ block content
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
                 $('#example').DataTable();
+                $('.example-popover').popover({
+                    container: 'body'
+                })
+                //- function GetMap() {
+                //-     var map = new Microsoft.Maps.Map($("#myMap"), {
+                //-         credentials: ‘Your Bing Maps Key’
+                //-     });
+
+                //-     //Generate a 1,000 random locations that are within the bounds of the map view.
+                //-     var locs = Microsoft.Maps.TestDataGenerator.getLocations(1000, map.getBounds());
+
+                //-     //Load the HeatMap module.
+                //-     Microsoft.Maps.loadModule('Microsoft.Maps.HeatMap', function () {
+                //-         var heatmap = new Microsoft.Maps.HeatMapLayer(locs);
+                //-         map.layers.insert(heatmap);
+                //-     });
+                //- }
+
             });
+            
 
