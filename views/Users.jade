@@ -1,10 +1,14 @@
 extends layout
 
 head
-    script(type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer)
-    
+    meta(charset='utf-8')
+
 block content
     .container-fluid
+        div
+            a MAP
+            #myMap(style='position:relative;width:600px;height:400px;')
+
         div
             br
             button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal', sytle='float:right')
@@ -237,28 +241,14 @@ block content
                                                         form(action="/users/delete/#{data._id}", method="POST")
                                                             button.btn.btn-danger.btn-sm(type="submit") Delete
     div
+        script(type='text/javascript', src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=aAZ7g0Ou67d6SRBy5xFG~fyidyYc7akZAgOsxPO2Uvg~AiKm3a0PSDNOnZdMf_6ckf1vY3Bv5yB8EaXZUJrjJldT-LyEjddH0lv16-cpdSUC ', async='', defer='')
         script.
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
                 $('#example').DataTable();
-                $('.example-popover').popover({
-                    container: 'body'
-                })
-                //- function GetMap() {
-                //-     var map = new Microsoft.Maps.Map($("#myMap"), {
-                //-         credentials: ‘Your Bing Maps Key’
-                //-     });
-
-                //-     //Generate a 1,000 random locations that are within the bounds of the map view.
-                //-     var locs = Microsoft.Maps.TestDataGenerator.getLocations(1000, map.getBounds());
-
-                //-     //Load the HeatMap module.
-                //-     Microsoft.Maps.loadModule('Microsoft.Maps.HeatMap', function () {
-                //-         var heatmap = new Microsoft.Maps.HeatMapLayer(locs);
-                //-         map.layers.insert(heatmap);
-                //-     });
-                //- }
-
             });
             
-
+            function GetMap()
+            {
+                var map = new Microsoft.Maps.Map('#myMap');
+            }
