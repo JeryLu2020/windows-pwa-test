@@ -6,9 +6,6 @@ head
 block content
     .container-fluid
         div
-            a MAP
-            #myMap
-        div
             br
             button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal', sytle='float:right')
                 | Add Record
@@ -84,7 +81,7 @@ block content
                     each data in usersData
                         tr
                             td 
-                                a(href='', data-toggle='modal', data-target="#viewmodal#{data._id}")
+                                a.text-primary(href='', data-toggle='modal', data-target="#viewmodal#{data._id}")
                                     | #{data.first_name}
                                 .modal.fade(tabindex='-1', role='dialog', aria-labelledby='viewModalLabel', aria-hidden='true', id="viewmodal#{data._id}")
                                     .modal-dialog.modal-dialog-centered
@@ -130,11 +127,18 @@ block content
                             td #{data.middle_initial}
                             td #{data.last_name}
                             //- td #{data.street_address}
-                            td <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="popover" title="#{data.street_address}" data-html="true"  data-content="<b>Bing Map</b>">#{data.street_address}</button>
+
+                            td <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="popoverMap" title="#{data.street_address}">#{data.street_address}</button>
+                                div
+                                    #myMap.d-none(style='height: 400px; width: 600px;')
+                                    //- #popoverContent.d-none(style='height: 400px; width: 600px;')
+                                    //-     a Hello
+                                    //-     #myMap
+
                             td #{data.state_name}
                             td #{data.payment_card}
                             td 
-                                a(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="emailValid: #{data.emailValid} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.email}
+                                a.text-primary(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="emailValid: #{data.emailValid} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.email}
                             td #{data.updatedAt}
                             td
                                 .btn-toolbar.mb-3(role='toolbar', aria-label='Toolbar with button groups')
@@ -241,17 +245,28 @@ block content
                                                             button.btn.btn-danger.btn-sm(type="submit") Delete
 
         style.
-            #myMap {
-                position: relative;
-                width: 600px;
-                height: 400px;
+            .popover {
+                max-width: none;
             }
 
-        script(type='text/javascript', src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=aAZ7g0Ou67d6SRBy5xFG~fyidyYc7akZAgOsxPO2Uvg~AiKm3a0PSDNOnZdMf_6ckf1vY3Bv5yB8EaXZUJrjJldT-LyEjddH0lv16-cpdSUC ', async='', defer='')
+        script(type='text/javascript', src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=aAZ7g0Ou67d6SRBy5xFG~fyidyYc7akZAgOsxPO2Uvg~AiKm3a0PSDNOnZdMf_6ckf1vY3Bv5yB8EaXZUJrjJldT-LyEjddH0lv16-cpdSUC ', async='', defer='')
 
         script.
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
+                $('[data-toggle="popoverMap"]').popover({
+                    //- html: true,
+                    //- placement: 'right',
+                    //- content: function(){
+                    //-     return $('#popoverContent').html();
+                    //- }
+                }).click(function(){
+                    if($('#myMap').hasClass('d-none')){
+                        $('#myMap').removeClass('d-none').addClass('d-display');
+                    } else {
+                        $('#myMap').removeClass('d-display').addClass('d-none');
+                    }
+                });
                 $('#example').DataTable();
             });
 

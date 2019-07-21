@@ -31,6 +31,11 @@ router.get('/offline.html', function (req, res) {
     res.sendFile('./public/offline.html');
 });
 
+router.get('/map', function (req, res) {
+    res.render('map');
+});
+
+
 //webpush.generateVAPIDKeys();
 //azure key
 const vapidKeys = {
