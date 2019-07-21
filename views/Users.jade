@@ -7,8 +7,7 @@ block content
     .container-fluid
         div
             a MAP
-            #myMap(style='position:relative;width:600px;height:400px;')
-
+            #myMap
         div
             br
             button.btn.btn-success(type='button', data-toggle='modal', data-target='#addModal', sytle='float:right')
@@ -131,7 +130,7 @@ block content
                             td #{data.middle_initial}
                             td #{data.last_name}
                             //- td #{data.street_address}
-                            td <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="popover" title="#{data.street_address}" data-html="true"  data-content="<b>Bing Map</b><div > map </div>">show location</button>
+                            td <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="popover" title="#{data.street_address}" data-html="true"  data-content="<b>Bing Map</b>">#{data.street_address}</button>
                             td #{data.state_name}
                             td #{data.payment_card}
                             td 
@@ -240,15 +239,28 @@ block content
                                                         button.btn.btn-secondary.btn-sm(type='button', data-dismiss='modal') Cancle
                                                         form(action="/users/delete/#{data._id}", method="POST")
                                                             button.btn.btn-danger.btn-sm(type="submit") Delete
-    div
+
+        style.
+            #myMap {
+                position: relative;
+                width: 600px;
+                height: 400px;
+            }
+
         script(type='text/javascript', src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=aAZ7g0Ou67d6SRBy5xFG~fyidyYc7akZAgOsxPO2Uvg~AiKm3a0PSDNOnZdMf_6ckf1vY3Bv5yB8EaXZUJrjJldT-LyEjddH0lv16-cpdSUC ', async='', defer='')
+
         script.
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
                 $('#example').DataTable();
             });
-            
+
             function GetMap()
             {
                 var map = new Microsoft.Maps.Map('#myMap');
             }
+
+
+
+//- apply a free BING MAP api key
+//- https://www.bingmapsportal.com/Application
