@@ -73,7 +73,7 @@ block content
                         th Last_name
                         th Street_address
                         th State_name
-                        th Payment_card
+                        th Country_name
                         th Email
                         th UpdatedAt
                         th Operations
@@ -86,57 +86,66 @@ block content
                                 .modal.fade(tabindex='-1', role='dialog', aria-labelledby='viewModalLabel', aria-hidden='true', id="viewmodal#{data._id}")
                                     .modal-dialog.modal-dialog-centered
                                         .modal-content 
-                                            .modal-header.bg-primary.text-white
-                                                h3#viewModalLabel.modal-title Detail
-                                            .modal-body
-                                                form()
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label username:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='' value='#{data.username}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label password:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='password', readonly='', value='#{data.password}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label email:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='', value='#{data.email}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label first_name:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='', value='#{data.first_name}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label middle_name:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='', value='#{data.middle_initial}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label last_name:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='', value='#{data.last_name}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label address:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='', value='#{data.street_address}')
-                                                    .form-group.row
-                                                        label.col-sm-3.col-form-label State:
-                                                        .col-sm-9
-                                                            input.form-control-plaintext(type='text', readonly='', value='#{data.state_name}')
-                                            .modal-footer
-                                                button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+                                            .modal-c-tabs
+                                                ul.nav.nav-tabs.md-tabs.tabs-2.light-blue(role='tablist')
+                                                    li.nav-item
+                                                        a.nav-link.active(data-toggle='tab', href='#panel7', role='tab')
+                                                            h5#viewModalLabel.modal-title
+                                                                i.fas.fa-user.mr-1
+                                                                |  Account Details
+                                                    li.nav-item
+                                                        a.nav-link(data-toggle='tab', href='#panel8', role='tab')
+                                                            h5#viewModalLabel.modal-title
+                                                                i.fas.fa-location-arrow.mr-1
+                                                                |  User Location
+                                                .tab-content
+                                                    #panel7.tab-pane.fade.in.show.active(role='tabpanel')
+                                                        .modal-body.mb-1
+                                                            form()
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label username:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='' value='#{data.username}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label password:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='password', readonly='', value='#{data.password}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label email:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='', value='#{data.email}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label first_name:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='', value='#{data.first_name}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label middle_name:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='', value='#{data.middle_initial}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label last_name:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='', value='#{data.last_name}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label address:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='', value='#{data.street_address}')
+                                                                .form-group.row
+                                                                    label.col-sm-3.col-form-label State:
+                                                                    .col-sm-9
+                                                                        input.form-control-plaintext(type='text', readonly='', value='#{data.state_name}')
+                                                        .modal-footer
+                                                            button.btn.btn-outline-secondary.waves-effect.ml-auto(type='button', data-dismiss='modal') Close
+                                                    #panel8.tab-pane.fade(role='tabpanel')
+                                                        .modal-body
+                                                            #myMap(style="position:relative;width:468px;height:408px;")
+                                                        .modal-footer
+                                                            button.btn.btn-outline-secondary.waves-effect.ml-auto(type='button', data-dismiss='modal') Close
                             td #{data.middle_initial}
                             td #{data.last_name}
-                            //- td #{data.street_address}
-
-                            td <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="popoverMap" title="#{data.street_address}">#{data.street_address}</button>
-                                div
-                                    #myMap.d-none(style='height: 400px; width: 600px;')
-                                    //- #popoverContent.d-none(style='height: 400px; width: 600px;')
-                                    //-     a Hello
-                                    //-     #myMap
-
+                            td #{data.street_address}
                             td #{data.state_name}
-                            td #{data.payment_card}
+                            td #{data.country_name}
                             td 
                                 a.text-primary(tabindex='0', data-html="true", data-toggle='popover', data-trigger='focus', title='User Register Info', data-content="emailValid: #{data.emailValid} <br/> password:  #{data.password} <br/> email: #{data.email} <br/> created date: #{data.createdAt}") #{data.email}
                             td #{data.updatedAt}
@@ -245,28 +254,12 @@ block content
                                                             button.btn.btn-danger.btn-sm(type="submit") Delete
 
         style.
-            .popover {
-                max-width: none;
-            }
-
+            
         script(type='text/javascript', src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=aAZ7g0Ou67d6SRBy5xFG~fyidyYc7akZAgOsxPO2Uvg~AiKm3a0PSDNOnZdMf_6ckf1vY3Bv5yB8EaXZUJrjJldT-LyEjddH0lv16-cpdSUC ', async='', defer='')
 
         script.
             $(document).ready(function(){
                 $('[data-toggle="popover"]').popover();
-                $('[data-toggle="popoverMap"]').popover({
-                    //- html: true,
-                    //- placement: 'right',
-                    //- content: function(){
-                    //-     return $('#popoverContent').html();
-                    //- }
-                }).click(function(){
-                    if($('#myMap').hasClass('d-none')){
-                        $('#myMap').removeClass('d-none').addClass('d-display');
-                    } else {
-                        $('#myMap').removeClass('d-display').addClass('d-none');
-                    }
-                });
                 $('#example').DataTable();
             });
 
