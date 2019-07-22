@@ -136,9 +136,10 @@ block content
                                                                         input.form-control-plaintext(type='text', readonly='', value='#{data.state_name}')
                                                         .modal-footer
                                                             button.btn.btn-outline-secondary.waves-effect.ml-auto(type='button', data-dismiss='modal') Close
-                                                    #panel8.tab-pane.fade(role='tabpanel')
+                                                    #panel8.tab-pane.fade(role='tabpane2')
                                                         .modal-body
-                                                            #myMap(style="position:relative;width:468px;height:408px;")
+                                                            a #{data.id}
+                                                            div(style="position:relative;width:468px;height:412.8px;" id='myMap')
                                                         .modal-footer
                                                             button.btn.btn-outline-secondary.waves-effect.ml-auto(type='button', data-dismiss='modal') Close
                             td #{data.middle_initial}
@@ -264,8 +265,8 @@ block content
             });
 
             function GetMap()
-            {
-                var map = new Microsoft.Maps.Map('#myMap');
+            {   
+                var map = new Microsoft.Maps.Map("#myMap");
             }
 
 
