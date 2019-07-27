@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app.js"
+    "dev": "concurrently \"nodemon app.js\" \"cd client && npm start\"",
+    "build": "cd client && npm run build",
+    "start": "node app.js"
   },
   "description": "ExpressApp2",
   "author": {

@@ -21,7 +21,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// add React
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+// remove original express view
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // use session to store the user info
 app.use(session({
