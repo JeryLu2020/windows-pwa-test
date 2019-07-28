@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev-client": "cd client && npm start",
+    "dev-server": "nodemon app.js",
     "dev": "concurrently \"nodemon app.js\" \"cd client && npm start\"",
     "build": "cd client && npm run build",
     "start": "node app.js"

@@ -1,13 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from "react-router-dom";
+
 import './App.css';
+
+import NavbarTop from './Navs/NavbarTop';
+import Home from './Pages/Home';
+import Users from './Pages/Users';
 
 function App() {
   return (
-    <div className="App">
-      <h1>hello</h1>
+    <div>
+      <NavbarTop />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/home" component={Home} />
+        <Route path="/users" component={Users} />
+      </Switch>
     </div>
   );
 }
 
 export default App;
+
+
+// Material-UI
+// https://material-ui.com/getting-started/installation/
