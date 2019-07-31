@@ -1,71 +1,35 @@
-import React from 'react';
-import MaterialTable from 'material-table';
+import React from "react";
+import ReactDOM from "react-dom";
+import MUIDataTable from "mui-datatables";
 
-export default function UsersTable() {
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'Surname', field: 'surname' },
-      { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-      {
-        title: 'Birth Place',
-        field: 'birthCity',
-        lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-      },
-    ],
-    data: [
-      {
-        name: 'Mehmet',
-        surname: 'Baran',
-        birthYear: 1987,
-        birthCity: 63
-      },
-      {
-        name: 'Zerya Betül',
-        surname: 'Baran',
-        birthYear: 2017,
-        birthCity: 34,
-      },
-    ],
-  });
+class UsersTable extends React.Component {
+  render() {
+    const columns = ["Name", "Title", "Location", "Age", "Salary"];
 
-  return (
-    <div>
-      <MaterialTable
-        title="Users List"
-        columns={state.columns}
-        data={state.data}
-        editable={{
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data.push(newData);
-                setState({ ...state, data });
-              }, 600);
-            }),
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data[data.indexOf(oldData)] = newData;
-                setState({ ...state, data });
-              }, 600);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data.splice(data.indexOf(oldData), 1);
-                setState({ ...state, data });
-              }, 600);
-            }),
-        }}
+    const data = [
+      ["Gabby George", "Business Analyst", "Minneapolis", 30, "$100,000"],
+      ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
+      ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
+      ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
+      ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
+      ["Frankie Parry", "Agency Legal Counsel", "Jacksonville", 71, "$210,000"],
+      ["Mason Ray", "Computer Scientist", "San Francisco", 39, "$142,000"]
+    ];
+
+    const options = {
+      filterType: "dropdown",
+      responsive: "scroll"
+    };
+
+    return (
+      <MUIDataTable
+        title={"Users List"}
+        data={data}
+        columns={columns}
+        options={options}
       />
-    </div>
-
-  );
+    );
+  }
 }
+
+export default UsersTable;
