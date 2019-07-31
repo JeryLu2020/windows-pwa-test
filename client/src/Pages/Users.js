@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-
+import UsetsTable from './UsersTable';
 
 class Users extends Component{
     render(){
         return(
-            <h1>Users page</h1>
+            <div>
+                <h1>Users page</h1>
+                <UsetsTable/>
+            </div>
         );
     }
 }
