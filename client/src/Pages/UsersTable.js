@@ -33,3 +33,7 @@ class UsersTable extends React.Component {
 }
 
 export default UsersTable;
+
+// Datatables for React using Material-UI 
+// - https://www.material-ui-datatables.com
+// - GitHub https://github.com/gregnb/mui-datatables

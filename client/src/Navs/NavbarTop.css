@@ -1,0 +1,21 @@
+.root {
+	flexGrow: 1;
+}
+.menuButton {
+	marginRight: spacing(2);
+}
+.title {
+	flexGrow: 1;
+}
+.button {
+	boxShadow: "none";
+	font-size: 17;
+	textTransform: "none";
+}
+.container {
+	display: 'flex';
+	flexWrap: 'wrap';
+}
+.input {
+	margin: spacing(1);
+}
