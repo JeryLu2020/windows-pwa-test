@@ -27,18 +27,19 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    if(req.session.userId == process.env.ADMIN_ID){
+    //if(req.session.userId == process.env.ADMIN_ID){
         Hero.find()
             .then(data =>{
                 console.log('findAll success');
-                return res.render('Users', { layout: 'layout', usersData: data});
+				// return res.render('Users', { layout: 'layout', usersData: data});
+				return res.send(data);
             })
             .catch(err=>{
                 return res.render('error', { errmsg: err });
             })
-    } else {
-        return res.render('error', { errmsg: "Please Login As Admintrator"});
-    }
+    // } else {
+    //     return res.render('error', { errmsg: "Please Login As Admintrator"});
+    // }
 };
 
 exports.update = (req, res) => {
