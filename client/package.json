@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.2.1",
     "@material-ui/icons": "^4.2.1",
+    "dotenv": "^8.0.0",
     "install": "^0.13.0",
     "material-table": "^1.40.1",
     "mui-datatables": "^2.6.4",
