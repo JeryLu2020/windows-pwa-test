@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 
-
 export default function UsersTables() {
 
 	const [state, setState] = React.useState({
@@ -25,6 +24,7 @@ export default function UsersTables() {
 			},
 		],
 	});
+	
 	const [hasError, setErrors] = useState(false);
 	const [users, setUsers] = useState({});
 
