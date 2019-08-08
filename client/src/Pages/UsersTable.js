@@ -4,76 +4,78 @@ require('dotenv').config();
 
 
 export default function UsersTable() {
-	const [state, setState] = React.useState({
-		columns: [{
-			title: 'Name',
-			field: 'name'
-		},
-		{
-			title: 'Surname',
-			field: 'surname'
-		},
-		{
-			title: 'Birth Year',
-			field: 'birthYear',
-			type: 'numeric'
-		},
-		{
-			title: 'Birth Place',
-			field: 'birthCity',
-			lookup: {
-				34: 'İstanbul',
-				63: 'Şanlıurfa'
-			},
-		},
-		],
-		data: [{
-			name: 'Mehmet',
-			surname: 'Baran',
-			birthYear: 1987,
-			birthCity: 63
-		},
-		{
-			name: 'Zerya Betül',
-			surname: 'Baran',
-			birthYear: 2017,
-			birthCity: 34,
-		},
-		],
-	});
+	// const [state, setState] = React.useState({
+	// 	columns: [{
+	// 		title: 'username',
+	// 		field: 'username'
+	// 	},
+	// 	{
+	// 		title: 'password',
+	// 		field: 'password'
+	// 	},
+	// 	{
+	// 		title: 'email',
+	// 		field: 'email',
+	// 	},
+	// 	{
+	// 		title: 'country_name',
+	// 		field: 'country_name',
+	// 	},
+	// 	],
+	// 	data: [{
+	// 		username: 'Mehmet',
+	// 		password: 'Baran',
+	// 		email: 1987,
+	// 		country_name: 63
+	// 	},
+	// 	],
+	// });
 
-	let url = process.env.NODE_ENV == 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
+	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
-	const [users, setUsers] = React.useState(null);
+	const [users, setUsers] = React.useState([]);
 	React.useEffect(() => {
 		fetch(url)
 			.then(results => results.json())
-			.then(data => {
-				setUsers(data);
+			.then(users => {
+				setUsers(users);
+				console.log(users);
 			});
 	}, []);
 
 	console.log(url);
 
+
+	const renderTable = () => {
+		return users.forEach(user => {
+			return (
+				<tr>
+					<td>{user.username}</td>
+					<td>{user.password}</td>
+					<td>{user.email}</td>
+					<td>{user.country_name}</td>
+				</tr>
+			)
+		})
+	}
+
 	return (
 		<div>
-			<MaterialTable title="Editable Example"
+			{/* <MaterialTable title="Users Table"
 				columns={
-					state.columns
+					users.columns
 				}
-				data={
-					state.data
-				}
+				data={renderTable()}
 				editable={
 					{
 						onRowAdd: newData =>
 							new Promise(resolve => {
 								setTimeout(() => {
 									resolve();
-									const data = [...state.data];
+									const data = [...users.data];
 									data.push(newData);
-									setState({
-										...state,
+									setUsers({
+										...users,
 										data
 									});
 								}, 600);
@@ -82,10 +84,10 @@ export default function UsersTable() {
 							new Promise(resolve => {
 								setTimeout(() => {
 									resolve();
-									const data = [...state.data];
+									const data = [...users.data];
 									data[data.indexOf(oldData)] = newData;
-									setState({
-										...state,
+									setUsers({
+										...users,
 										data
 									});
 								}, 600);
@@ -94,17 +96,27 @@ export default function UsersTable() {
 							new Promise(resolve => {
 								setTimeout(() => {
 									resolve();
-									const data = [...state.data];
+									const data = [...users.data];
 									data.splice(data.indexOf(oldData), 1);
-									setState({
-										...state,
+									setUsers({
+										...users,
 										data
 									});
 								}, 600);
 							}),
 					}
-				} />
-			<div>{JSON.stringify(users)}</div>
+				} /> */}
+			<table id="users">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Address</th>
+						<th>Company</th>
+					</tr>
+				</thead>
+				<tbody>{renderTable()}</tbody>
+			</table>
 		</div>
 	);
 }
