@@ -26,6 +26,7 @@
     "mongoose": "^5.5.6",
     "morgan": "^1.7.0",
     "pug": "^2.0.0-beta6",
+    "react-scripts": "^3.0.1",
     "request": "^2.88.0",
     "serve-favicon": "^2.3.0",
     "web-push": "^3.3.3"

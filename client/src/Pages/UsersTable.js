@@ -1,83 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 
-export default function UsersTables() {
+export default function UsersTable() {
+	// const [state, setState] = React.useState({
+	// 	columns: [{
+	// 		title: 'username',
+	// 		field: 'username'
+	// 	},
+	// 	{
+	// 		title: 'password',
+	// 		field: 'password'
+	// 	},
+	// 	{
+	// 		title: 'email',
+	// 		field: 'email',
+	// 	},
+	// 	{
+	// 		title: 'country_name',
+	// 		field: 'country_name',
+	// 	},
+	// 	],
+	// 	data: [{
+	// 		username: 'Mehmet',
+	// 		password: 'Baran',
+	// 		email: 1987,
+	// 		country_name: 63
+	// 	},
+	// 	],
+	// });
 
-	const [state, setState] = React.useState({
-		columns: [
-			{ title: 'Name', field: 'name' },
-			{ title: 'Surname', field: 'surname' },
-			{ title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-			{
-				title: 'Birth Place',
-				field: 'birthCity',
-				lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-			},
-		],
-		data: [
-			{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-			{
-				name: 'Zerya Betül',
-				surname: 'Baran',
-				birthYear: 2017,
-				birthCity: 34,
-			},
-		],
-	});
-	
-	const [hasError, setErrors] = useState(false);
-	const [users, setUsers] = useState({});
+	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
-	const url = process.env.APP_HOST;
+	const [users, setUsers] = React.useState([]);
+	React.useEffect(() => {
+		fetch(url)
+			.then(results => results.json())
+			.then(users => {
+				setUsers(users);
+				// console.log(users);
+			});
+	}, []);
 
-	useEffect(() => {
-		async function fetchData() {
-			const res = await fetch(url + "api/users");
-			res
-				.json()
-				.then(res => setUsers(res))
-				.catch(err => setErrors(err));
-		}
-		fetchData();
-	});
+	const renderTable = () => {
+		return users.map((user,i) => {
+			// console.log(user);
+			// console.log(user.first_name);
+			return (
+				<tr key={i}>
+					<td>{user.first_name}</td>
+					<td>{user.email}</td>
+					<td>{user.password}</td>
+					<td>{user.country_name}</td>
+				</tr>
+			)
+		})
+	}
 
 	return (
 		<div>
-			<MaterialTable
-				title="Editable Example"
-				columns={state.columns}
-				data={state.data}
-				editable={{
-					onRowAdd: newData =>
-						new Promise(resolve => {
-							setTimeout(() => {
-								resolve();
-								const data = [...state.data];
-								data.push(newData);
-								setState({ ...state, data });
-							}, 600);
-						}),
-					onRowUpdate: (newData, oldData) =>
-						new Promise(resolve => {
-							setTimeout(() => {
-								resolve();
-								const data = [...state.data];
-								data[data.indexOf(oldData)] = newData;
-								setState({ ...state, data });
-							}, 600);
-						}),
-					onRowDelete: oldData =>
-						new Promise(resolve => {
-							setTimeout(() => {
-								resolve();
-								const data = [...state.data];
-								data.splice(data.indexOf(oldData), 1);
-								setState({ ...state, data });
-							}, 600);
-						}),
-				}}
-			/>
-			<p>{JSON.stringify(users)}</p>
+			<table id="users" >
+				<thead>
+					<tr>
+						<th>First_name</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Country_name</th>
+					</tr>
+				</thead>
+				<tbody>{renderTable()}</tbody>
+			</table>
 		</div>
 	);
 }
