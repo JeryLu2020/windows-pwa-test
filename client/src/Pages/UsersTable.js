@@ -43,8 +43,8 @@ export default function UsersTable() {
 
 	const renderTable = () => {
 		return users.map((user,i) => {
-			// console.log(user);
-			// console.log(user.first_name);
+			console.log(user);
+			console.log(user.first_name);
 			return (
 				<tr key={i}>
 					<td>{user.first_name}</td>

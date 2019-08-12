@@ -2,4 +2,6 @@
 /.env
 
 /client/node_modules
-/views
+views
+
+-views
