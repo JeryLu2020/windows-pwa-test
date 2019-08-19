@@ -1,0 +1,29 @@
+extends layout
+
+head
+
+block content
+    .container-fluid
+        div
+            #world-map(style='height: 600px')
+    
+    script.
+        $(document).ready(function(){
+            $('#world-map').vectorMap({
+                //- map: 'world_mill',
+                series: {
+                    regions: [{
+                    scale: ['#C8EEFF', '#0071A4'],
+                    normalizeFunction: 'polynomial'
+                    }]
+                },
+                onRegionTipShow: function(e, el, code){
+                    el.html(el.html());
+                }
+            });
+        });
+
+
+
+
+//- http://jvectormap.com/tutorials/getting-started/
