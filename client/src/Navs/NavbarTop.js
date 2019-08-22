@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Button, ButtonToolbar, Modal, Form } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom'
 import history from '../Pages/History';
 
 let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
@@ -31,7 +30,7 @@ function Navbarfunc() {
 			})
 		})
 		.then(results => {
-			console.log(results.status);
+			console.log(results);
 			if(results.status == 200) {
 				history.push('/#/users')
 				window.location.reload();
@@ -90,23 +89,6 @@ function Navbarfunc() {
 }
 
 export default class NavbarTop extends React.Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = { value: '' };
-
-	// 	this.handleChange = this.handleChange.bind(this);
-	// 	this.handleSubmit = this.handleSubmit.bind(this);
-	// }
-
-	// handleChange(event) {
-	// 	this.setState({ value: event.target.value });
-	// }
-
-	// handleSubmit(event) {
-	// 	alert('A name was submitted: ' + this.state.value);
-	// 	event.preventDefault();
-	// }
-
 	render() {
 		return (
 			<div>

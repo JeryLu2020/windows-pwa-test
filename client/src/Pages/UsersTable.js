@@ -1,33 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export default function UsersTable() {
-	// const [state, setState] = React.useState({
-	// 	columns: [{
-	// 		title: 'username',
-	// 		field: 'username'
-	// 	},
-	// 	{
-	// 		title: 'password',
-	// 		field: 'password'
-	// 	},
-	// 	{
-	// 		title: 'email',
-	// 		field: 'email',
-	// 	},
-	// 	{
-	// 		title: 'country_name',
-	// 		field: 'country_name',
-	// 	},
-	// 	],
-	// 	data: [{
-	// 		username: 'Mehmet',
-	// 		password: 'Baran',
-	// 		email: 1987,
-	// 		country_name: 63
-	// 	},
-	// 	],
-	// });
-
 	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
 	const [users, setUsers] = React.useState([]);
@@ -58,16 +31,6 @@ export default function UsersTable() {
 		})
 	}
 
-	// const renderTable2 = () => {
-	// 	return users.map((user, i) => {
-	// 		console.log(user);
-	// 		console.log(user.first_name);
-	// 		return (
-	// 			user
-	// 		)
-	// 	})
-	// }
-
 	return (
 		<div>
 			<table id="users" >
@@ -84,12 +47,6 @@ export default function UsersTable() {
 				</thead>
 				<tbody>{renderTable()}</tbody>
 			</table>
-			{/* <MDBDataTable
-				striped
-				bordered
-				hover
-				data={renderTable2()}
-			/> */}
 		</div>
 	);
 }

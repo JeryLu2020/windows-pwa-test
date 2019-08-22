@@ -23,4 +23,7 @@ router.post('/login', userServices.userlogin);
 // logout
 router.get('/logout', userServices.userlogout);
 
+// check if user logined in
+router.get('/getuseremail', userServices.getSession);
+
 module.exports = router;

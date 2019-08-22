@@ -133,6 +133,8 @@ exports.userlogin = (req, res) => {
                     return res.send('error');
                 }
                 req.session.userId = data._id;
+                req.session.username = data.email;
+                console.log(data.email);
                 // return res.redirect('/users');
                 console.log(data);
                 return res.send(data);
@@ -168,5 +170,16 @@ exports.userlogout = (req, res) => {
     }
     else {
         return res.redirect('/');
+    }
+};
+
+exports.getSession = (req, res) => {
+    let useremail = req.session.username;
+    console.log("req.session.username"+useremail);
+    if(useremail){
+        return res.send(useremail);
+    } else {
+        console.log('hello');
+        return res.status(500);
     }
 };
