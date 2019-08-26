@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Button, ButtonToolbar, Modal, Form } from 'react-bootstrap';
+import { Navbar, Nav, Button, ButtonToolbar, Modal, Form, Alert } from 'react-bootstrap';
 import history from '../Pages/History';
+import axios from 'axios';
 
 let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
@@ -18,31 +19,36 @@ function Navbarfunc() {
 		console.log(username);
 		console.log(password);
 
-		fetch(url + '/login', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({
-				"username": username,
-				"password": password,
+		axios({
+			method: 'post',
+			url: url + '/login',
+			data: {
+				username: username,
+				password: password
+ 			 }
 			})
-		})
-		.then(results => {
-			console.log(results);
-			if(results.status == 200) {
-				history.push('/#/users')
+			.then(res => {
+				if(res.status == 200){
+					console.log(res.data.email);
+					localStorage.setItem('loginemail', res.data.email);
+					history.push('/#/home');
+					window.location.reload();
+				} else {
+					history.push('/#/home');
+					window.location.reload();
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				history.push('/#/error');
 				window.location.reload();
-				// return <Redirect to='/#/users' />
-			} else {
-				history.push('/#/home')
-				window.location.reload();
-			}
-		})
-		.catch((error) => { 
-			console.error(error);
-		});
+			})
+	}
+
+	const handleSingout = () => {
+		// console.log('handleSingout');
+		localStorage.clear();
+		window.location.reload();
 	}
 
 	return (
@@ -79,7 +85,7 @@ function Navbarfunc() {
 							</Modal>
 						</ButtonToolbar>
 						<ButtonToolbar>
-							<Button variant="light">Signout</Button>
+							<Button variant="light" onClick={handleSingout}>Signout</Button>
 						</ButtonToolbar>
 					</Nav>
 				</Navbar.Collapse>
@@ -91,10 +97,7 @@ function Navbarfunc() {
 export default class NavbarTop extends React.Component {
 	render() {
 		return (
-			<div>
 				<Navbarfunc />
-
-			</div>
 		);
 	}
 }

@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 
 function GetUsername() {
-    const [username, setUsername] = useState('');
-
-    React.useEffect(() => {
-        setUsername = ('undefined');
-    }, [])
+    // const [username, setUsername] = useState('');
 
     let style = {
         position: 'absolute', left: '50%', top: '50%',
@@ -14,7 +10,7 @@ function GetUsername() {
 
     return (
         <div style={style}>
-            <h3>Welcome {username}</h3>
+            <h3>Welcome {localStorage.getItem('loginemail')}</h3>
         </div>
     );
 }

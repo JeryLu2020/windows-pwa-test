@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import UsetsTable from './UsersTable';
-import { Container } from 'react-bootstrap/Container'
+import Error from './Error';
+
+function CheckLogin() {
+    if(localStorage.getItem('loginemail')){
+        return <UsetsTable />
+    } else {
+        return <Error />
+    }
+}
+
+
 
 class Users extends Component{
     render(){
         return(
-            <div>
-                <h1>Users page</h1>
-                <UsetsTable/>
-            </div>
+            <CheckLogin />
         );
     }
 }

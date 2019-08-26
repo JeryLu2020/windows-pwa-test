@@ -137,7 +137,7 @@ exports.userlogin = (req, res) => {
                 console.log(data.email);
                 // return res.redirect('/users');
                 console.log(data);
-                return res.send(data);
+                return res.status(200).send(data);
             })
             .catch(err => {
                 if (err.kind === 'ObjectId') {
