@@ -7,38 +7,31 @@ https://windows-pwa-express.azurewebsites.net/
 
 ## Table of contents
 
-- [Folder Structure](#FolderStructure)
-- [Manifest](#Manifest)
+- [How to run](#Howtorun)
+<!-- - [Manifest](#Manifest)
 - [Service Worker](#Service-Worker)
 - [Deploy To Azure](#Deploy)
-- [Offline Mode](#Offline-Mode)
+- [Offline Mode](#Offline-Mode) -->
 ---
 
-## FolderStructure
-```
-SamplePWAwebapp
- | - public/
- | | - images/
- | | - stylesheets/
- | | - manifest.json
- | | - offline.html
- | | - pwabuilder-sw-register.js
- | | - pwabuilder-sw.js
- | - routes/
- | | - index.js
- | | - user.js
- | - views/
- | | - error.pug
- | | - index.pug
- | | - layout.pug
- | - app.js
- | - package.json
- | - web.config
-```
+## Howtorun
 
-Document reference:
-- https://docs.microsoft.com/en-us/microsoft-edge/progressive-web-apps/get-started
-- https://docs.microsoft.com/en-us/labs/insiderdevtour2018/pwa/
+- install modules:
+    - npm install
+    - cd client && npm install
+    - npm install nodemon -g
+
+- start dev server:
+    - npm run dev:server
+
+- start dev client: 
+    - npm run dev:client
+
+- build client:
+    - npm run build
+
+
+<!-- 
 
 ## Manifest
 
@@ -114,4 +107,4 @@ const offlineFallbackPage = "/offline.html";
 
 Feel free to turn off the network and test again.
 
-[back to top](#table-of-contents)
+[back to top](#table-of-contents) -->
