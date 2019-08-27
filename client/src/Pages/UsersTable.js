@@ -4,6 +4,8 @@ export default function UsersTable() {
 	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
 	const [users, setUsers] = React.useState([]);
+
+	// use react hook to fetch all the user data from Express API
 	React.useEffect(() => {
 		fetch(url)
 			.then(results => results.json())

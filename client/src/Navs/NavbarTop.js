@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Button, ButtonToolbar, Modal, Form, Alert } from 'react-bootstrap';
 import history from '../Pages/History';
-import axios from 'axios';
+import axios from 'axios'; // axios is a http request module
 
 let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
 function Navbarfunc() {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(false); // React 16.8.0 is using state hook to replace the component mount life circle
 
-	const handleShow = () => setShow(true);
+	const handleShow = () => setShow(true); // This is for poping up the login page
 	const handleClose = () => setShow(false);
 
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState(''); // set default value to empty and fetch data from input box
 	const [password, setPassword] = useState('');
 
 	const handleSingin = () => {
@@ -19,7 +19,7 @@ function Navbarfunc() {
 		console.log(username);
 		console.log(password);
 
-		axios({
+		axios({ 				// send POST request to Express API
 			method: 'post',
 			url: url + '/login',
 			data: {
@@ -29,10 +29,10 @@ function Navbarfunc() {
 			})
 			.then(res => {
 				if(res.status == 200){
-					console.log(res.data.email);
-					localStorage.setItem('loginemail', res.data.email);
-					history.push('/#/home');
-					window.location.reload();
+					console.log(res.data.email); // login success
+					localStorage.setItem('loginemail', res.data.email); // store the user email in browser storage
+					history.push('/#/home'); 	// route to home page 
+					window.location.reload();	// refresh teh page
 				} else {
 					history.push('/#/home');
 					window.location.reload();
@@ -47,7 +47,7 @@ function Navbarfunc() {
 
 	const handleSingout = () => {
 		// console.log('handleSingout');
-		localStorage.clear();
+		localStorage.clear();	// clear user email information when clicking signout
 		window.location.reload();
 	}
 
@@ -63,8 +63,8 @@ function Navbarfunc() {
 					</Nav>
 					<Nav>
 						<ButtonToolbar>
-							{/* <Button variant="info" onClick={() => setModalShow(true)}>Signin</Button> */}
 							<Button variant="info" onClick={handleShow}>Signin</Button>
+							{/* pop out modal for user login */}
 							<Modal show={show} onHide={handleClose} animation={false} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
 								<Modal.Header closeButton>
 									<Modal.Title>Modal heading</Modal.Title>
@@ -96,8 +96,8 @@ function Navbarfunc() {
 
 export default class NavbarTop extends React.Component {
 	render() {
-		return (
-				<Navbarfunc />
+		return ( 
+				<Navbarfunc />	// invoke the function as a component
 		);
 	}
 }
