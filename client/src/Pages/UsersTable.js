@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button, ButtonGroup } from 'react-bootstrap';
 
 export default function UsersTable() {
 	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
@@ -29,6 +29,12 @@ export default function UsersTable() {
 					<td>{user.city_name}</td>
 					<td>{user.state_name}</td>
 					<td>{user.company_address}</td>
+					<td>
+					<ButtonGroup aria-label="Basic example">
+						<Button size="sm" variant="primary">Modify</Button>
+						<Button size="sm" variant="danger">Delelte</Button>
+					</ButtonGroup>
+					</td>
 				</tr>
 			)
 		})
@@ -46,9 +52,12 @@ export default function UsersTable() {
 						<th>city_name</th>
 						<th>state_name</th>
 						<th>company_address</th>
+						<th>Operations</th>
 					</tr>
 				</thead>
-				<tbody>{renderTable()}</tbody>
+				<tbody>
+					{renderTable()}
+				</tbody>
 			</Table>
 		</div>
 	);
