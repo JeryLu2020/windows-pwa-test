@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from 'react-bootstrap';
 
 export default function UsersTable() {
 	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
@@ -35,7 +36,7 @@ export default function UsersTable() {
 
 	return (
 		<div>
-			<table id="users" >
+			<Table responsive >
 				<thead>
 					<tr>
 						<th>First_name</th>
@@ -48,7 +49,7 @@ export default function UsersTable() {
 					</tr>
 				</thead>
 				<tbody>{renderTable()}</tbody>
-			</table>
+			</Table>
 		</div>
 	);
 }
