@@ -1,10 +1,15 @@
-import React from 'react';
-import { Table, Button, ButtonGroup } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Table, Button, ButtonGroup, Modal, Form, Row, Col} from 'react-bootstrap';
 
 export default function UsersTable() {
 	let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
 
 	const [users, setUsers] = React.useState([]);
+	// modify button modal
+	const [showmodify, setShowmodify] = React.useState(false);
+
+	const handleShowmodify = () => setShowmodify(true);
+	const handleClosemodify = () => setShowmodify(false);
 
 	// use react hook to fetch all the user data from Express API
 	React.useEffect(() => {
@@ -16,10 +21,14 @@ export default function UsersTable() {
 			});
 	}, []);
 
+	let style = {
+		background: 'rgba(0, 0, 0, 0)',
+	}
+
 	const renderTable = () => {
 		return users.map((user, i) => {
 			// console.log(user);
-			// console.log(user.first_name);
+			console.log(user._id);
 			return (
 				<tr key={i}>
 					<td>{user.first_name}</td>
@@ -30,10 +39,60 @@ export default function UsersTable() {
 					<td>{user.state_name}</td>
 					<td>{user.company_address}</td>
 					<td>
-					<ButtonGroup aria-label="Basic example">
-						<Button size="sm" variant="primary">Modify</Button>
-						<Button size="sm" variant="danger">Delelte</Button>
-					</ButtonGroup>
+						<ButtonGroup aria-label="Basic example">
+							<Button size="sm" variant="primary" onClick={handleShowmodify}>Modify</Button>
+								<Modal show={showmodify} onHide={handleClosemodify} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered style={style}>
+									<Modal.Header closeButton>
+										<Modal.Title>Details</Modal.Title>
+									</Modal.Header>
+									<Modal.Body>
+										<Form>
+											<Form.Group as={Row} controlId="formPlaintextEmail">
+												<Form.Label column sm="2">Email</Form.Label>
+												<Col sm="10">
+													<Form.Control type='text' readOnly placeholder={user.email} />
+												</Col>
+											</Form.Group>
+											<Form.Group as={Row} controlId="formPlaintextPassword">
+												<Form.Label column sm="2">Password</Form.Label>
+												<Col sm="10">
+													<Form.Control type='text' placeholder={user.password} />
+												</Col>
+											</Form.Group>
+											<Form.Group as={Row} controlId="formPlaintextPassword">
+												<Form.Label column sm="2">First Name</Form.Label>
+												<Col sm="10">
+													<Form.Control type='text' placeholder={user.first_name} />
+												</Col>
+											</Form.Group>
+											<Form.Group as={Row} controlId="formPlaintextPassword">
+												<Form.Label column sm="2">Country Name</Form.Label>
+												<Col sm="10">
+													<Form.Control type='text' placeholder={user.country_name} />
+												</Col>
+											</Form.Group>
+											<Form.Group as={Row} controlId="formPlaintextPassword">
+												<Form.Label column sm="2">City Name</Form.Label>
+												<Col sm="10">
+													<Form.Control type='text' placeholder={user.city_name} />
+												</Col>
+											</Form.Group>
+											<Form.Group as={Row} controlId="formPlaintextPassword">
+												<Form.Label column sm="2">State Name</Form.Label>
+												<Col sm="10">
+													<Form.Control type='text' placeholder={user.state_name} />
+												</Col>
+											</Form.Group>
+										</Form>
+									</Modal.Body>
+									<Modal.Footer>
+										<Button type='button' variant="primary" >
+											Go
+										</Button>
+									</Modal.Footer>
+								</Modal>
+							<Button size="sm" variant="danger">Delelte</Button>
+						</ButtonGroup>
 					</td>
 				</tr>
 			)

@@ -65,7 +65,7 @@ function Navbarfunc() {
 						<ButtonToolbar>
 							<Button variant="info" onClick={handleShow}>Signin</Button>
 							{/* pop out modal for user login */}
-							<Modal show={show} onHide={handleClose} animation={false} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+							<Modal show={show} onHide={handleClose} animation={true} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
 								<Modal.Header closeButton>
 									<Modal.Title>Modal heading</Modal.Title>
 								</Modal.Header>
