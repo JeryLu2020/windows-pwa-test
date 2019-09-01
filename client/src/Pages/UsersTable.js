@@ -121,3 +121,6 @@ export default function UsersTable() {
 		</div>
 	);
 }
+
+
+// https://medium.com/@BogdanSoare/how-to-use-reacts-new-context-api-to-easily-manage-modals-2ae45c7def81
