@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function GetUsername() {
     // const [username, setUsername] = useState('');

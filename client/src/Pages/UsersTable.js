@@ -6,10 +6,10 @@ export default function UsersTable() {
 
 	const [users, setUsers] = React.useState([]);
 	// modify button modal
-	const [showmodify, setShowmodify] = React.useState(false);
+	const [showmodify, setShowmodify] = React.useState(null);
 
-	const handleShowmodify = () => setShowmodify(true);
-	const handleClosemodify = () => setShowmodify(false);
+	const handleShowmodify = (index) => setShowmodify(index);
+	const handleClosemodify = () => setShowmodify(null);
 
 	// use react hook to fetch all the user data from Express API
 	React.useEffect(() => {
@@ -26,11 +26,11 @@ export default function UsersTable() {
 	}
 
 	const renderTable = () => {
-		return users.map((user, i) => {
+		return users.map((user) => {
 			// console.log(user);
 			console.log(user._id);
 			return (
-				<tr key={i}>
+				<tr key={user._id}>
 					<td>{user.first_name}</td>
 					<td>{user.email}</td>
 					<td>{user.password}</td>
@@ -40,8 +40,8 @@ export default function UsersTable() {
 					<td>{user.company_address}</td>
 					<td>
 						<ButtonGroup aria-label="Basic example">
-							<Button size="sm" variant="primary" onClick={handleShowmodify}>Modify</Button>
-								<Modal show={showmodify} onHide={handleClosemodify} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered style={style}>
+							<Button id={user._id} size="sm" variant="primary" onClick={handleShowmodify(user._id)}>Modify</Button>
+								<Modal id={user._id} show={ showmodify === user._id } onHide={handleClosemodify} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered style={style}>
 									<Modal.Header closeButton>
 										<Modal.Title>Details</Modal.Title>
 									</Modal.Header>
