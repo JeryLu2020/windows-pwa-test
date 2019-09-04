@@ -7,10 +7,13 @@ exports.create = (req, res) => {
         middle_initial: req.body.middle_initial || 'N/A',
         last_name: req.body.last_name || 'N/A',
         street_address: req.body.street_address || 'N/A',
+
+        country_name: req.body.country_name || 'N/A',
         city_name: req.body.city_name || 'N/A',
-        payment_card: req.body.payment_card || 'N/A',
         state_name: req.body.state_name || 'N/A',
+
         day_of_birth: req.body.day_of_birth || '',
+        payment_card: req.body.payment_card || 'N/A',
 
         username: req.body.username || 'Undefined',
         password: req.body.password || '',
@@ -19,10 +22,13 @@ exports.create = (req, res) => {
 
     hero.save()
         .then(data => {
-            res.redirect('/users');
+            // res.redirect('/users');
+            console.log('success');
+            return res.status(200).send(data);
         })
         .catch(err => {
-            return res.render('error', { errmsg: err });
+            // return res.render('error', { errmsg: err });
+            return res.status(500);
         })
 };
 
@@ -81,42 +87,45 @@ exports.delete = (req, res) => {
                 return res.render('error', { errmsg: err });
             }
             console.log('delete success');
-            return res.redirect('/users');
+            // return res.redirect('/users');
+            return res.status(200);
         })
         .catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 console.log('record not found' + req.params.Id);
-                return res.render('error', { errmsg: err });
+                // return res.render('error', { errmsg: err });
+                return res.status(500);
             }
-            return res.render('error', { errmsg: err });
+            // return res.render('error', { errmsg: err });
+            return res.status(500);
         });
 };
 
 
 exports.userregister = (req, res) => {
-
     const hero = new Hero({
         first_name: req.body.first_name || 'Unknown name',
-        middle_initial: req.body.middle_initial || 'N/A',
-        last_name: req.body.last_name || 'N/A',
-        street_address: req.body.street_address || 'N/A',
-        city_name: req.body.city_name || 'N/A',
-        payment_card: req.body.payment_card || 'N/A',
-        state_name: req.body.state_name || 'N/A',
-        day_of_birth: req.body.day_of_birth || '',
 
-        username: req.body.username || 'Undefined',
-        password: req.body.password || '',
+        country_name: req.body.country_name || 'N/A',
+        city_name: req.body.city_name || 'N/A',
+        state_name: req.body.state_name || 'N/A',
+
+        day_of_birth: req.body.day_of_birth || '',
+        payment_card: req.body.payment_card || 'N/A',
+
+        password: req.body.password || 'Undefined',
         email: req.body.email || 'Undefined',
     });
 
     hero.save()
         .then(data => {
-            // console.log("data._id>>>" + data._id);
-            return res.redirect('/');
+            // res.redirect('/users');
+            console.log('success');
+            return res.status(200).send(data);
         })
         .catch(err => {
-            return res.render('error', { errmsg: err });
+            // return res.render('error', { errmsg: err });
+            return res.status(500);
         })
 };
 

@@ -5,7 +5,7 @@ require('dotenv').config();
 
 //Set up default mongoose connection
 var mongoDBurl = process.env.MONGODB_CONNECTION;
-mongoose.connect(mongoDBurl, { useNewUrlParser: true });
+mongoose.connect(mongoDBurl, { useNewUrlParser: true, useFindAndModify: false });
 
 //Get the default connection
 var db = mongoose.connection;
