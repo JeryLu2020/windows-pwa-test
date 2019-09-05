@@ -11,7 +11,6 @@ export default function UsersTable() {
 		show: false,
 		activeModal: null
 	});
-
 	const handleShow = (e, index) => setShow({
 		show: true,
 		activeModal: index,
@@ -30,13 +29,20 @@ export default function UsersTable() {
 				// console.log(users);
 			});
 	}, []);
-
 	// handle delete record.
-	const [deleteuser, SetDeleteuser] = React.useState(false);
-
-	const handleShowdelete = (e) => SetDeleteuser(true);
-	const handleClosedelete = () => SetDeleteuser(false);
-
+	const [showdelete, SetShowdelete] = React.useState({
+		showdelete: false,
+		activedelete: null
+	});
+	const handleShowdelete = (e, index) => SetShowdelete({
+		showdelete: true,
+		activedelete: index
+	});
+	const handleClosedelete = () => SetShowdelete({
+		showdelete: false,
+		activedelete: null
+	});
+	// send request to express delete api and delete the data due to Mongo index ID. findByIdAndRemove()
 	function deleteRecord(e, id) {
 		console.log(id);
 		console.log(url + '/delete/' + id);
@@ -48,22 +54,75 @@ export default function UsersTable() {
 			}
 		})
 			.then(res => {
+				console.log(res);
 				if (res.status == 200) {
 					console.log("delete success"); // login success
 					window.location.reload();
 				} else {
 					console.log("delete failed");
+					window.location.reload();
 				}
 			})
 			.catch(err => {
 				console.log(err);
+				window.location.reload();
 			})
 	}
+
+	// set from info
+	const [modifyuser, setModifyuser] = React.useState({
+		_id:'',
+		email: '',
+		password: '',
+		first_name: '',
+		country_name: '',
+		city_name: '',
+		state_name: '',
+	})
+	// create form submit
+	const modifyRecord = e => {
+		e.preventDefault();
+		console.log(modifyuser);
+		// axios call to express create user
+		// axios({
+		// 	method: 'POST',
+		// 	url: url + '/edit' + modifyuser._id,
+		// 	data: {
+		// 		Id: modifyuser._id,
+		// 		email: modifyuser.email,
+		// 		password: modifyuser.password,
+		// 		first_name: modifyuser.first_name,
+		// 		country_name: modifyuser.country_name,
+		// 		city_name: modifyuser.city_name,
+		// 		state_name: modifyuser.state_name,
+		// 	}
+		// })
+		// 	.then(res => {
+		// 		if (res.status == 200) {
+		// 			console.log("modify success");
+		// 			window.location.reload();
+		// 		} else {
+		// 			console.log("modify failed");
+		// 			window.location.reload();
+		// 		}
+		// 	})
+		// 	.catch(err => {
+		// 		console.log(err);
+		// 	})
+		// console.log(url + '/edit' + modifyuser._id)
+	};
+	// match form name properity with the input value
+	const updateValue = e => {
+		console.log(e.target.value)
+		setModifyuser({
+			...modifyuser,
+			[e.target.name]: e.target.value
+		});
+	};
 
 	const renderTable = () => {
 		return users.map((user) => {
 			// console.log(user);
-			// console.log(user._id)
 			return (
 				<tr key={user._id}>
 					<td>{user.first_name}</td>
@@ -75,58 +134,75 @@ export default function UsersTable() {
 					<td>{user.company_address}</td>
 					<td>
 						<ButtonGroup aria-label="Basic example">
-							<Button id={user._id} size="sm" variant="primary" onClick={e => handleShow(e, user._id)}>Modify</Button>
-							<Modal id={user._id} show={show.activeModal === user._id} onHide={handleClose} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
+							<Button size="sm" variant="primary" onClick={e => handleShow(e, user._id)}>Modify</Button>
+							<Modal show={show.activeModal === user._id} onHide={handleClose} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
 								<Modal.Header closeButton>
 									<Modal.Title>Details</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
-									<Form>
+									<Form id='modifyuser' onSubmit={modifyRecord}>
 										<Form.Group as={Row} controlId="formPlaintextEmail">
 											<Form.Label column sm="2">Email</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' readOnly placeholder={user.email} />
+												<Form.Control type='text' readOnly placeholder={user._id} value={user._id} name="_id"/>
+											</Col>
+										</Form.Group>
+										<Form.Group as={Row} controlId="formPlaintextEmail">
+											<Form.Label column sm="2">Email</Form.Label>
+											<Col sm="10">
+												<Form.Control type='text' placeholder={user.email} value={user.email} name="email" onChange={updateValue}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextPassword">
 											<Form.Label column sm="2">Password</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user.password} />
+												<Form.Control type='password' placeholder="" value={user.password} name="password" onChange={updateValue}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextPassword">
 											<Form.Label column sm="2">First Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user.first_name} />
+												<Form.Control type='text' placeholder="" value={user.first_name} name="first_name" onChange={updateValue}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextPassword">
 											<Form.Label column sm="2">Country Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user.country_name} />
+												<Form.Control type='text' placeholder="" value={user.country_name} name="country_name" onChange={updateValue}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextPassword">
 											<Form.Label column sm="2">City Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user.city_name} />
+												<Form.Control type='text' placeholder="" value={user.city_name} name="city_name" onChange={updateValue}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextPassword">
 											<Form.Label column sm="2">State Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user.state_name} />
+												<Form.Control type='text' placeholder="" value={user.state_name} name="state_name" onChange={updateValue}/>
 											</Col>
 										</Form.Group>
 									</Form>
 								</Modal.Body>
 								<Modal.Footer>
-									<Button type='button' variant="primary" >
-										Submit
-										</Button>
+									<Button form='modifyuser' type='submit' variant="primary" >Submit</Button>
 								</Modal.Footer>
 							</Modal>
-							<Button size="sm" variant="danger" >Delelte</Button>
+						</ButtonGroup>
+						<ButtonGroup>
+							<Button size="sm" variant="danger" onClick={e => handleShowdelete(e, user._id)}>Delete</Button>
+							<Modal show={showdelete.activedelete === user._id} onHide={handleClosedelete} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
+								<Modal.Header variant="danger" closeButton bg="danger">
+									<Modal.Title>Sure to Delete?</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<p>user email is: {user.email}</p>
+								</Modal.Body>
+								<Modal.Footer>
+									<Button type='button' variant="danger" onClick={e => deleteRecord(e, user._id)}>Delete</Button>
+								</Modal.Footer>
+							</Modal>
 						</ButtonGroup>
 					</td>
 				</tr>
@@ -135,20 +211,18 @@ export default function UsersTable() {
 	}
 
 
-
 	// create record
 	const [showcreate, setShowcreate] = React.useState(false);
 
 	const handleShowcreate = () => {
 		setShowcreate(true);
 	}
-
 	const handleClosecreate = () => {
 		setShowcreate(false);
 	}
-	
 	// set from info
 	const [newuser, setNewuser] = React.useState({
+		_id:'',
 		email: '',
 		password: '',
 		first_name: '',
@@ -157,7 +231,7 @@ export default function UsersTable() {
 		state_name: '',
 	})
 	// create form submit
-	const printValues = e => {
+	const createRecord = e => {
 		e.preventDefault();
 		console.log(newuser);
 		// axios call to express create user
@@ -178,14 +252,13 @@ export default function UsersTable() {
 					console.log("create success");
 					window.location.reload();
 				} else {
-					console.log("delete failed");
+					console.log("create failed");
 					window.location.reload();
 				}
 			})
 			.catch(err => {
 				console.log(err);
 			})
-		console.log(url + '/register')
 	};
 	// match form name properity with the input value
 	const updateField = e => {
@@ -205,7 +278,7 @@ export default function UsersTable() {
 							<Modal.Title>Details</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							<Form id='createuser' onSubmit={printValues}>
+							<Form id='createuser' onSubmit={createRecord}>
 								<Form.Group as={Row} controlId="formPlaintextEmail">
 									<Form.Label column sm="2">Email</Form.Label>
 									<Col sm="10">
@@ -255,7 +328,6 @@ export default function UsersTable() {
 
 	return (
 		<div>
-
 			{createData()}
 			<Table responsive >
 				<thead>
