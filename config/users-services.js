@@ -49,39 +49,28 @@ exports.findAll = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log(req.body);
-    // Hero.findByIdAndUpdate(req.params.Id, {
-    //     first_name: req.body.first_name || 'Unknown name',
-    //     middle_initial: req.body.middle_initial || 'N/A',
-    //     last_name: req.body.last_name || 'N/A',
-    //     street_address: req.body.street_address || 'N/A',
+    console.log("id is : " + req.body._id);
+    console.log("request body is : " + req.body.first_name);
 
-    //     country_name: req.body.country_name || 'N/A',
-    //     city_name: req.body.city_name || 'N/A',
-    //     state_name: req.body.state_name || 'N/A',
+    Hero.findByIdAndUpdate(req.body._id, {
+        first_name: req.body.first_name || 'Unknown name',
+       
+        country_name: req.body.country_name || 'N/A',
+        city_name: req.body.city_name || 'N/A',
+        state_name: req.body.state_name || 'N/A',
 
-    //     day_of_birth: req.body.day_of_birth || '',
-    //     payment_card: req.body.payment_card || 'N/A',
-
-    //     username: req.body.username || 'Undefined',
-    //     password: req.body.password || '',
-    //     email: req.body.email || 'Undefined',
-    // }, { new: true })
-    //     .then(data => {
-    //         if (!data) {
-    //             return res.render('error', { errmsg: err });
-    //         }
-    //         // console.log(data._id);
-    //         console.log('update success');
-    //         return res.redirect('/users');
-    //     })
-    //     .catch(err => {
-    //         if (err.kind === 'ObjectId') {
-    //             console.log('record not found' + req.params.Id);
-    //             return res.render('error', { errmsg: err });
-    //         }
-    //         return res.render('error', { errmsg: err });
-    //     });
+        password: req.body.password || '',
+        email: req.body.email || 'Undefined',
+    }, { new: true })
+        .then(data => {
+            // res.redirect('/users');
+            console.log('modify success');
+            return res.status(200).send(data);
+        })
+        .catch(err => {
+            // return res.render('error', { errmsg: err });
+            return res.status(500);
+        })
 };
 
 exports.delete = (req, res) => {

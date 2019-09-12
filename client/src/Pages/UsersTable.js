@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Table, Button, ButtonGroup, Modal, Form, Row, Col, Alert } from 'react-bootstrap';
+import React from 'react';
+import { Table, Button, ButtonGroup, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios'; // axios is a http request module
 
 export default function UsersTable() {
@@ -55,7 +55,7 @@ export default function UsersTable() {
 		})
 			.then(res => {
 				console.log(res);
-				if (res.status == 200) {
+				if (res.status === 200) {
 					console.log("delete success"); // login success
 					window.location.reload();
 				} else {
@@ -79,44 +79,47 @@ export default function UsersTable() {
 		city_name: '',
 		state_name: '',
 	})
+
 	// create form submit
-	const modifyRecord = e => {
+	const modifyRecord = (e) => {
 		e.preventDefault();
 		console.log(modifyuser);
+		console.log(url + '/edit/' + modifyuser._id);
 		// axios call to express create user
-		// axios({
-		// 	method: 'POST',
-		// 	url: url + '/edit' + modifyuser._id,
-		// 	data: {
-		// 		Id: modifyuser._id,
-		// 		email: modifyuser.email,
-		// 		password: modifyuser.password,
-		// 		first_name: modifyuser.first_name,
-		// 		country_name: modifyuser.country_name,
-		// 		city_name: modifyuser.city_name,
-		// 		state_name: modifyuser.state_name,
-		// 	}
-		// })
-		// 	.then(res => {
-		// 		if (res.status == 200) {
-		// 			console.log("modify success");
-		// 			window.location.reload();
-		// 		} else {
-		// 			console.log("modify failed");
-		// 			window.location.reload();
-		// 		}
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err);
-		// 	})
-		// console.log(url + '/edit' + modifyuser._id)
+		axios({
+			method: 'post',
+			url: url + '/edit/' + modifyuser._id,
+			data: {
+				_id: modifyuser._id,
+				email: modifyuser.email,
+				password: modifyuser.password,
+				first_name: modifyuser.first_name,
+				country_name: modifyuser.country_name,
+				city_name: modifyuser.city_name,
+				state_name: modifyuser.state_name,
+			}
+		})
+		.then(res => {
+			if (res.status === 200) {
+				console.log("modify success");
+				window.location.reload();
+			} else {
+				console.log("modify failed");
+				// history.push('/#/error');
+				window.location.reload();
+			}
+		})
+		.catch(err => {
+			console.log(err);
+			window.location.reload();
+		})
 	};
 	// match form name properity with the input value
-	const updateValue = e => {
+	const updateValue = (e) => {
 		console.log(e.target.value)
 		setModifyuser({
 			...modifyuser,
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 	};
 
@@ -141,46 +144,46 @@ export default function UsersTable() {
 								</Modal.Header>
 								<Modal.Body>
 									<Form id='modifyuser' onSubmit={modifyRecord}>
-										<Form.Group as={Row} controlId="formPlaintextEmail">
-											<Form.Label column sm="2">Email</Form.Label>
+										<Form.Group as={Row} controlId="formPlaintextId">
+											<Form.Label column sm="2">ID</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' readOnly placeholder={user._id} value={user._id} name="_id"/>
+												<Form.Control type='text' placeholder={user._id} value={user._id} name="_id" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextEmail">
 											<Form.Label column sm="2">Email</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user.email} value={user.email} name="email" onChange={updateValue}/>
+												<Form.Control type='text' placeholder={user.email} value={modifyuser.email} name="email" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextPassword">
 											<Form.Label column sm="2">Password</Form.Label>
 											<Col sm="10">
-												<Form.Control type='password' placeholder="" value={user.password} name="password" onChange={updateValue}/>
+												<Form.Control type='password' placeholder={user.password} value={modifyuser.password} name="password" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
-										<Form.Group as={Row} controlId="formPlaintextPassword">
+										<Form.Group as={Row} controlId="formPlaintextFirstName">
 											<Form.Label column sm="2">First Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder="" value={user.first_name} name="first_name" onChange={updateValue}/>
+												<Form.Control type='text' placeholder={user.first_name} value={modifyuser.first_name} name="first_name" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
-										<Form.Group as={Row} controlId="formPlaintextPassword">
+										<Form.Group as={Row} controlId="formPlaintextCountry">
 											<Form.Label column sm="2">Country Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder="" value={user.country_name} name="country_name" onChange={updateValue}/>
+												<Form.Control type='text' placeholder={user.country_name} value={modifyuser.country_name} name="country_name" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
-										<Form.Group as={Row} controlId="formPlaintextPassword">
+										<Form.Group as={Row} controlId="formPlaintextCity">
 											<Form.Label column sm="2">City Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder="" value={user.city_name} name="city_name" onChange={updateValue}/>
+												<Form.Control type='text' placeholder={user.city_name} value={modifyuser.city_name} name="city_name" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
-										<Form.Group as={Row} controlId="formPlaintextPassword">
+										<Form.Group as={Row} controlId="formPlaintextState">
 											<Form.Label column sm="2">State Name</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder="" value={user.state_name} name="state_name" onChange={updateValue}/>
+												<Form.Control type='text' placeholder={user.state_name} value={modifyuser.state_name} name="state_name" onChange={e => updateValue(e)}/>
 											</Col>
 										</Form.Group>
 									</Form>
@@ -248,7 +251,7 @@ export default function UsersTable() {
 			}
 		})
 			.then(res => {
-				if (res.status == 200) {
+				if (res.status === 200) {
 					console.log("create success");
 					window.location.reload();
 				} else {

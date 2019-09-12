@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Button, ButtonToolbar, Modal, Form, Alert } from 'react-bootstrap';
+import { Navbar, Nav, Button, ButtonToolbar, Modal, Form } from 'react-bootstrap';
 import history from '../Pages/History';
 import axios from 'axios'; // axios is a http request module
 
