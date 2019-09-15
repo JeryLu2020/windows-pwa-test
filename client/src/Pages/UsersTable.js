@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { Table, Button, ButtonGroup, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios'; // axios is a http request module
 
@@ -28,7 +29,7 @@ export default function UsersTable() {
 				setUsers(users);
 				// console.log(users);
 			});
-	}, []);
+	}, [url]);
 	// handle delete record.
 	const [showdelete, SetShowdelete] = React.useState({
 		showdelete: false,
@@ -80,23 +81,36 @@ export default function UsersTable() {
 		state_name: '',
 	})
 
+	const inputRef = useRef(null);
+
 	// create form submit
-	const modifyRecord = (e) => {
+	const modifyRecord = (e, userid) => {
 		e.preventDefault();
 		console.log(modifyuser);
-		console.log(url + '/edit/' + modifyuser._id);
+
+		var user = document.getElementById(userid).elements;
+		console.log(user._id.value);
+		console.log(user.email.value);
+		console.log(user.email.placeholder);
+		console.log(user.password.value);
+		console.log(user.first_name.value);
+		console.log(user.country_name.value);
+		console.log(user.city_name.value);
+		console.log(user.state_name.value);
+		console.log(url + '/edit/' + user._id.value);
+		
 		// axios call to express create user
 		axios({
 			method: 'post',
-			url: url + '/edit/' + modifyuser._id,
+			url: url + '/edit/' + user._id.value,
 			data: {
-				_id: modifyuser._id,
-				email: modifyuser.email,
-				password: modifyuser.password,
-				first_name: modifyuser.first_name,
-				country_name: modifyuser.country_name,
-				city_name: modifyuser.city_name,
-				state_name: modifyuser.state_name,
+				_id: user._id.value,
+				email: (modifyuser.email === "")? user.email.placeholder : modifyuser.email,
+				password: (modifyuser.password === "")? user.password.placeholder : modifyuser.password,
+				first_name: (modifyuser.first_name === "")? user.first_name.placeholder : modifyuser.first_name,
+				country_name: (modifyuser.country_name === "")? user.country_name.placeholder : modifyuser.country_name,
+				city_name: (modifyuser.city_name === "")? user.city_name.placeholder : modifyuser.city_name,
+				state_name: (modifyuser.state_name === "")? user.state_name.placeholder : modifyuser.state_name,
 			}
 		})
 		.then(res => {
@@ -116,7 +130,7 @@ export default function UsersTable() {
 	};
 	// match form name properity with the input value
 	const updateValue = (e) => {
-		console.log(e.target.value)
+		console.log(e.target.value);
 		setModifyuser({
 			...modifyuser,
 			[e.target.name]: e.target.value,
@@ -143,11 +157,11 @@ export default function UsersTable() {
 									<Modal.Title>Details</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
-									<Form id='modifyuser' onSubmit={modifyRecord}>
+									<Form id={user._id} onSubmit={e => modifyRecord(e, user._id)}>
 										<Form.Group as={Row} controlId="formPlaintextId">
 											<Form.Label column sm="2">ID</Form.Label>
 											<Col sm="10">
-												<Form.Control type='text' placeholder={user._id} value={user._id} name="_id" onChange={e => updateValue(e)}/>
+												<Form.Control readOnly type='text' placeholder={user._id} value={user._id} name="_id" />
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row} controlId="formPlaintextEmail">
@@ -189,7 +203,7 @@ export default function UsersTable() {
 									</Form>
 								</Modal.Body>
 								<Modal.Footer>
-									<Button form='modifyuser' type='submit' variant="primary" >Submit</Button>
+									<Button form={user._id} type='submit' variant="primary" >Submit</Button>
 								</Modal.Footer>
 							</Modal>
 						</ButtonGroup>

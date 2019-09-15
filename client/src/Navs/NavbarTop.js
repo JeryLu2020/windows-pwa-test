@@ -28,7 +28,7 @@ function Navbarfunc() {
  			 }
 			})
 			.then(res => {
-				if(res.status == 200){
+				if(res.status === 200){
 					console.log(res.data.email); // login success
 					localStorage.setItem('loginemail', res.data.email); // store the user email in browser storage
 					history.push('/#/home'); 	// route to home page 
