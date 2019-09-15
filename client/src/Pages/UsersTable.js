@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { Table, Button, ButtonGroup, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios'; // axios is a http request module
 
@@ -19,6 +18,19 @@ export default function UsersTable() {
 	const handleClose = () => setShow({
 		show: false,
 		activeModal: null,
+	});
+
+	const [show0, setShow0] = React.useState({
+		show0: false,
+		activeModal0: null
+	});
+	const handleShow0 = (e, index) => setShow0({
+		show: true,
+		activeModal0: index,
+	});
+	const handleClose0 = () => setShow0({
+		show: false,
+		activeModal0: null,
 	});
 
 	// use react hook to fetch all the user data from Express API
@@ -81,8 +93,6 @@ export default function UsersTable() {
 		state_name: '',
 	})
 
-	const inputRef = useRef(null);
-
 	// create form submit
 	const modifyRecord = (e, userid) => {
 		e.preventDefault();
@@ -142,7 +152,60 @@ export default function UsersTable() {
 			// console.log(user);
 			return (
 				<tr key={user._id}>
-					<td>{user.first_name}</td>
+					<td>
+						<p className="text-primary" onClick={e => handleShow0(e, user._id)}>{user.first_name}</p>
+						<Modal show={show0.activeModal0 === user._id} onHide={handleClose0} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
+							<Modal.Header closeButton>
+								<Modal.Title>Details</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<Form id={user._id}>
+									<Form.Group as={Row} controlId="formPlaintextId">
+										<Form.Label column sm="2">ID</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='text' placeholder={user._id} value={user._id} name="_id" />
+										</Col>
+									</Form.Group>
+									<Form.Group as={Row} controlId="formPlaintextEmail">
+										<Form.Label column sm="2">Email</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='text' placeholder={user.email} value={user.email} name="email" />
+										</Col>
+									</Form.Group>
+									<Form.Group as={Row} controlId="formPlaintextPassword">
+										<Form.Label column sm="2">Password</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='password' placeholder={user.password} value={user.password} name="password"/>
+										</Col>
+									</Form.Group>
+									<Form.Group as={Row} controlId="formPlaintextFirstName">
+										<Form.Label column sm="2">First Name</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='text' placeholder={user.first_name} value={user.first_name} name="first_name"/>
+										</Col>
+									</Form.Group>
+									<Form.Group as={Row} controlId="formPlaintextCountry">
+										<Form.Label column sm="2">Country Name</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='text' placeholder={user.country_name} value={user.country_name} name="country_name"/>
+										</Col>
+									</Form.Group>
+									<Form.Group as={Row} controlId="formPlaintextCity">
+										<Form.Label column sm="2">City Name</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='text' placeholder={user.city_name} value={user.city_name} name="city_name"/>
+										</Col>
+									</Form.Group>
+									<Form.Group as={Row} controlId="formPlaintextState">
+										<Form.Label column sm="2">State Name</Form.Label>
+										<Col sm="10">
+											<Form.Control readOnly type='text' placeholder={user.state_name} value={user.state_name} name="state_name"/>
+										</Col>
+									</Form.Group>
+								</Form>
+							</Modal.Body>
+						</Modal>
+					</td>
 					<td>{user.email}</td>
 					<td>{user.password}</td>
 					<td>{user.country_name}</td>
@@ -154,7 +217,7 @@ export default function UsersTable() {
 							<Button size="sm" variant="primary" onClick={e => handleShow(e, user._id)}>Modify</Button>
 							<Modal show={show.activeModal === user._id} onHide={handleClose} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
 								<Modal.Header closeButton>
-									<Modal.Title>Details</Modal.Title>
+									<Modal.Title>Modify</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
 									<Form id={user._id} onSubmit={e => modifyRecord(e, user._id)}>
@@ -211,7 +274,7 @@ export default function UsersTable() {
 							<Button size="sm" variant="danger" onClick={e => handleShowdelete(e, user._id)}>Delete</Button>
 							<Modal show={showdelete.activedelete === user._id} onHide={handleClosedelete} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
 								<Modal.Header variant="danger" closeButton bg="danger">
-									<Modal.Title>Sure to Delete?</Modal.Title>
+									<Modal.Title>Delete</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
 									<p>user email is: {user.email}</p>
@@ -292,7 +355,7 @@ export default function UsersTable() {
 					<Button size="lg" variant="success" onClick={handleShowcreate}>Create</Button>
 					<Modal show={showcreate} onHide={handleClosecreate} animation={true} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
 						<Modal.Header closeButton>
-							<Modal.Title>Details</Modal.Title>
+							<Modal.Title>Create</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
 							<Form id='createuser' onSubmit={createRecord}>
