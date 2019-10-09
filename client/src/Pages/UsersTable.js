@@ -328,7 +328,7 @@ export default function UsersTable() {
 			}
 		})
 			.then(res => {
-				console.log(res.status);
+				console.log(res);
 				if (res.status === 200) {
 					console.log("create success");
 					window.location.reload();
