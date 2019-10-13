@@ -2,6 +2,7 @@ const mongodb = require("mongodb");
 const mongourl = "****";
 const dbName = "React";
 const collectionName = "heros";
+var ObjectId = require('mongodb').ObjectID;
 
 let client = null;
 
@@ -19,27 +20,28 @@ module.exports = function (context, req) {
             }
             client = _client;
             context.log('Connected');
-            Delete(req.body.userid);
+            Delete(context, req.body.userid);
         });
     } else {
         // findAll();
-        // Create();
+        Delete(context, req.body.userid);
     }
 
-    function Delete(userid){
-        client.db(dbName).collection(collectionName).findByIdAndRemove(userid,(error, docs) => {
-            if (error) {
-                context.log('Error running query');
-                context.res = { status: 500, body: res.stack }
-                context.done();
-            }
+    function Delete(context, userid){
+        context.log('Deleting....' + userid);
 
-            context.log('>>>>>>>>>>>>>>>Delete Success!');
-            context.res = {
-                headers: { 'Content-Type': 'application/json' },
-                body: "Delete Success"
-            };
+        try{   
+            client.db(dbName).collection(collectionName).remove({"_id" : ObjectId(userid)}, true);
+        } catch(err) {
+            context.log('Error running query'+ err);
+            context.res = { status: 500, body: err }
             context.done();
-        });
+        }
+        context.log('>>>>>>>>>>>>>>>Delete Success!');
+        context.res = {
+            status: 200,
+            body: '>>>>>>>>>>>>>>>Delete Success!'
+        };
+        context.done();
     }
 };
