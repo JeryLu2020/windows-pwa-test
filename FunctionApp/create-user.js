@@ -1,5 +1,5 @@
 const mongodb = require("mongodb");
-const mongourl = "*******";
+const mongourl = process.env.MONGODB_URL;
 const dbName = "React";
 const collectionName = "heros";
 

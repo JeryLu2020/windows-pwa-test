@@ -1,5 +1,5 @@
 const mongodb = require("mongodb");
-const mongourl = "****";
+const mongourl = process.env.MONGODB_URL;
 const dbName = "React";
 const collectionName = "heros";
 var ObjectId = require('mongodb').ObjectID;
@@ -30,18 +30,26 @@ module.exports = function (context, req) {
     function Delete(context, userid){
         context.log('Deleting....' + userid);
 
-        try{   
-            client.db(dbName).collection(collectionName).remove({"_id" : ObjectId(userid)}, true);
-        } catch(err) {
-            context.log('Error running query'+ err);
-            context.res = { status: 500, body: err }
-            context.done();
-        }
-        context.log('>>>>>>>>>>>>>>>Delete Success!');
-        context.res = {
-            status: 200,
-            body: '>>>>>>>>>>>>>>>Delete Success!'
-        };
-        context.done();
+        client.db(dbName).collection(collectionName).findOne({"_id" : ObjectId(userid)}, (err, data)=>{
+            if(data == null || err) {
+                context.res = { status: 404, body: "User doesn't exist" }
+                context.done();
+            }
+            // context.log(data);
+            // context.res = { status: 200, body: "User exist" }
+            // context.done();
+            try{   
+                client.db(dbName).collection(collectionName).remove({"_id" : ObjectId(userid)}, true);
+                context.res = {
+                    status: 200,
+                    body: '>>>>>>>>>>>>>>>Delete Success!'
+                };
+                context.done();
+            } catch(err) {
+                context.log('Error running query'+ err);
+                context.res = { status: 500, body: err }
+                context.done();
+            }
+        })
     }
 };
