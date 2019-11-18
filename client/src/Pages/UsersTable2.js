@@ -7,7 +7,7 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import './UserTable2.css'
 
 export default function UsersTable() {
-    let url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/users' : "https://windows-pwa-express.azurewebsites.net/api/users"
+    let url = process.env.NODE_ENV === 'development' ? 'https://js-function-jery.azurewebsites.net/api/HttpTrigger-PWAfunction-showall?code=4B2Q2uPjkUs/Yd4soRs1aUWSbfNjN3z/VaSsKws2oYK9XSxfgadQ6w==' : "https://js-function-jery.azurewebsites.net/api/HttpTrigger-PWAfunction-showall?code=4B2Q2uPjkUs/Yd4soRs1aUWSbfNjN3z/VaSsKws2oYK9XSxfgadQ6w=="
 
     const [users, setUsers] = React.useState([]);
     // modify button modal
@@ -42,7 +42,7 @@ export default function UsersTable() {
         fetch(url)
             .then(results => results.json())
             .then(users => {
-                setUsers(users);
+                setUsers(users.res);
                 // console.log(users);
             });
     }, [url]);
