@@ -20,15 +20,14 @@ module.exports = function (context, req) {
             }
             client = _client;
             context.log('Connected');
-            Delete(context, req.body.userid);
+            FindOneUser(context, req.body.userid);
         });
     } else {
-        // findAll();
-        Delete(context, req.body.userid);
+        FindOneUser(context, req.body.userid);
     }
 
-    function Delete(context, userid){
-        context.log('Deleting....' + userid);
+    function FindOneUser(context, userid){
+        context.log('Finding....' + userid);
 
         client.db(dbName).collection(collectionName).findOne({"_id" : ObjectId(userid)}, (err, data)=>{
             if(data == null || err) {
@@ -39,6 +38,7 @@ module.exports = function (context, req) {
                 context.res = { status: 200, body: "User exist" }
                 context.done();
             }
+            
         })
     }
 };
