@@ -1,5 +1,5 @@
 const mongodb = require("mongodb");
-const mongourl = process.env.MONGODB_URL;
+const mongourl = "mongodb://jerytest:IZ8nYAVROPoQL8kSalbtMwsAhBK8oKft7IdNMm6NFXHrPwinNVmxrGsmURfSD8N5yxFemsMRtIxX5DWG6epJ1A%3D%3D@jerytest.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
 const dbName = "React";
 const collectionName = "heros";
 
@@ -19,29 +19,10 @@ module.exports = function (context, req) {
             }
             client = _client;
             context.log('Connected');
-            // findAll();
             Create();
         });
     } else {
-        // findAll();
-        // Create();
-    }
-
-    function findAll(){
-        client.db(dbName).collection(collectionName).find().toArray(function (error, docs) {
-            if (error) {
-                context.log('Error running query');
-                context.res = { status: 500, body: res.stack }
-                context.done();
-            }
-
-            context.log('>>>>>>>>>>>>>>>Find ALL Success!');
-            context.res = {
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ res: docs })
-            };
-            context.done();
-        });
+        Create();
     }
 
     function Create(){
@@ -62,22 +43,33 @@ module.exports = function (context, req) {
 
             username: req.body.username || 'Undefined',
             password: req.body.password || '',
-            email: req.body.email || 'Undefined',
+            email: req.body.email || 'Default Email'
         }
 
-        client.db(dbName).collection(collectionName).insertOne(newhero, (err, docs) => {
-            if(err){
-                context.log('Error running query');
-                context.res = { status: 500, body: res.stack }
+        client.db(dbName).collection(collectionName).findOne({"email" : req.body.email}, (err, data)=>{
+            if(data == null || err) {
+                context.log("User doesn't exist");
+                client.db(dbName).collection(collectionName).insertOne(newhero, (err, docs) => {
+                    if(err){
+                        context.log('Error running query');
+                        context.res = { status: 500, body: res.stack }
+                        context.done();
+                    }
+                    context.log('>>>>>>>>>>>>>>>Create Success!');
+                    context.res = {
+                        status: 200,
+                        body: '>>>>>>>>>>>>>>>Create Success!'
+                    };
+                    context.done();
+                })
+            } else {
+                context.log(data.email);
+                context.res = { status: 500, body: "User exist, please register with a different email" }
                 context.done();
             }
-            context.log('>>>>>>>>>>>>>>>Create Success!');
-            context.res = {
-                status: 200,
-                body: 200
-            };
-            context.done();
+            
         })
+        
     }
 
 };

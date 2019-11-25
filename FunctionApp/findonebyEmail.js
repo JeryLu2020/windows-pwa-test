@@ -29,12 +29,12 @@ module.exports = function (context, req) {
     function FindOneUser(context, email){
         context.log('Finding....' + email);
 
-        client.db(dbName).collection(collectionName).find({"email" : email}, (err, data)=>{
+        client.db(dbName).collection(collectionName).findOne({"email" : email}, (err, data)=>{
             if(data == null || err) {
                 context.res = { status: 404, body: "User doesn't exist" }
                 context.done();
             } else {
-                context.log(data);
+                context.log(data.email);
                 context.res = { status: 200, body: "User exist" }
                 context.done();
             }
