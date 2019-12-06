@@ -60,7 +60,7 @@ function Navbarfunc() {
 					<Nav className="mr-auto">
 						<Nav.Link href="#home">Home</Nav.Link>
 						<Nav.Link href="#users">Users</Nav.Link>
-						<Nav.Link href="#users2">Users2</Nav.Link>
+						{/* <Nav.Link href="#users2">Users2</Nav.Link> */}
 					</Nav>
 					<Nav>
 						<ButtonToolbar>
