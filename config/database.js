@@ -46,6 +46,7 @@ const heroSchema = new Schema({
         email: {
             type: String,
             required: true,
+            unique: true
         },
         emailValid: {
             type: Boolean,
