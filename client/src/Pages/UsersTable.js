@@ -329,12 +329,12 @@ export default function UsersTable() {
 		})
 			.then(res => {
 				console.log(res);
-				if (res.body == "exist") {
-					console.log("email exist, please use another email");
-					window.alert("email exist, please use another email");
-				} else if(res.status == 200){
+				if (res.status === 200) {
 					console.log("create success");
 					window.location.reload();
+				} else if(res.status == 201 ){
+					console.log("email exist, please use another email");
+					window.alert("email exist, please use another email");
 				} else {
 					console.log("create failed");
 					window.location.reload();
