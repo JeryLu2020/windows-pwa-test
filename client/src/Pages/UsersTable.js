@@ -317,7 +317,7 @@ export default function UsersTable() {
 		// axios call to express create user
 		axios({
 			method: 'POST',
-			url: "https://func-js-2019.azurewebsites.net/api/HttpTrigger-PWAserverapp",
+			url: "https://js-function-jery.azurewebsites.net/api/HttpTrigger-PWAfunction-Create?code=sVx6jdiHXHUIa3nyqDEJOX9nJ0maawVfb6KipAg3ECZ6zlkKfeuy4A==",
 			data: {
 				email: newuser.email,
 				password: newuser.password,
