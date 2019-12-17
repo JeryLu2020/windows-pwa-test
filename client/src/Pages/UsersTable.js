@@ -334,6 +334,7 @@ export default function UsersTable() {
 					window.location.reload();
 				} else if(res.status == 300 ){
 					console.log("email exist, please use another email");
+					alert("email exist, please use another email");
 				} else {
 					console.log("create failed");
 					window.location.reload();
